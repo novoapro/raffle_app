@@ -140,6 +140,5 @@ dist
 
 *.pyc
 *.db
-*.mp3
 *.jpg
 *.png
