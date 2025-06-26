@@ -1,0 +1,33 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    font-family: 'Quicksand', system-ui, sans-serif;
+  }
+  
+  body {
+    @apply bg-safari-cream;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-safari-green text-white px-8 py-3 rounded-xl hover:bg-safari-lightGreen transition-all duration-300 disabled:opacity-50 font-semibold shadow-safari hover:shadow-lg;
+  }
+  
+  .card {
+    @apply bg-white/80 backdrop-blur-sm rounded-2xl p-6 md:p-8 shadow-safari;
+  }
+  
+  .input {
+    @apply rounded-xl border-safari-lightGreen border-2 px-4 py-3 focus:border-safari-green focus:ring focus:ring-safari-green/20 transition-all duration-300;
+  }
+}
+
+@layer utilities {
+  .text-shadow {
+    text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+}
