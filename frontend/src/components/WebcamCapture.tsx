@@ -22,40 +22,56 @@ const WebcamCapture: React.FC<WebcamCaptureProps> = ({ onCapture, onCancel }) =>
   }, []);
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-white p-4 rounded-lg shadow-lg max-w-md w-full">
-        <div className="mb-4">
-          <h2 className="text-xl font-bold mb-2">Take a Photo</h2>
+    <div className="fixed inset-0 bg-jungle-brown/50 backdrop-blur-sm flex items-center justify-center z-50">
+      <div className="card max-w-md w-full relative">
+        {/* Decorative elements */}
+        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-jungle-green via-jungle-gold to-jungle-coral"></div>
+        <div className="absolute top-2 left-2 text-2xl animate-sway">🌿</div>
+        <div className="absolute top-2 right-2 text-2xl animate-sway" style={{ animationDelay: '0.5s' }}>🌿</div>
+        
+        <div className="mb-6">
+          <h2 className="safari-title text-center mb-4">Take a Photo 📸</h2>
           {error ? (
-            <p className="text-red-500">{error}</p>
+            <div className="bg-jungle-coral/10 border-2 border-jungle-coral rounded-xl p-4">
+              <p className="text-jungle-coral font-body">{error}</p>
+            </div>
           ) : (
-            <Webcam
-              audio={false}
-              ref={webcamRef}
-              screenshotFormat="image/jpeg"
-              videoConstraints={{
-                width: 480,
-                height: 360,
-                facingMode: "user"
-              }}
-              onUserMediaError={handleUserMediaError}
-              className="w-full rounded-lg"
-            />
+            <div className="relative">
+              <Webcam
+                audio={false}
+                ref={webcamRef}
+                screenshotFormat="image/jpeg"
+                videoConstraints={{
+                  width: 480,
+                  height: 360,
+                  facingMode: "user"
+                }}
+                onUserMediaError={handleUserMediaError}
+                className="w-full rounded-xl shadow-jungle"
+              />
+              {/* Camera frame decoration */}
+              <div className="absolute top-0 left-0 w-8 h-8 border-t-4 border-l-4 border-jungle-gold rounded-tl-xl"></div>
+              <div className="absolute top-0 right-0 w-8 h-8 border-t-4 border-r-4 border-jungle-gold rounded-tr-xl"></div>
+              <div className="absolute bottom-0 left-0 w-8 h-8 border-b-4 border-l-4 border-jungle-gold rounded-bl-xl"></div>
+              <div className="absolute bottom-0 right-0 w-8 h-8 border-b-4 border-r-4 border-jungle-gold rounded-br-xl"></div>
+            </div>
           )}
         </div>
-        <div className="flex justify-end gap-2">
+        
+        <div className="flex justify-end gap-4">
           <button
             onClick={onCancel}
-            className="px-4 py-2 bg-gray-200 text-gray-800 rounded hover:bg-gray-300"
+            className="btn-secondary bg-jungle-brown/10 text-jungle-brown hover:bg-jungle-brown/20"
           >
             Cancel
           </button>
           <button
             onClick={capture}
-            className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+            className="btn-primary flex items-center gap-2"
             disabled={!!error}
           >
-            Take Photo
+            <span>📸</span>
+            <span>Take Photo</span>
           </button>
         </div>
       </div>

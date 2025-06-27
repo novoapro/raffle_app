@@ -7,17 +7,20 @@ export default {
   theme: {
     extend: {
       colors: {
-        safari: {
-          green: '#4A6B50',
-          gold: '#C4943D',
-          cream: '#FDF6EC',
-          brown: '#8B6E4E',
-          lightGreen: '#9CAF88',
+        jungle: {
+          green: '#47624E',    // Main jungle green
+          olive: '#6A754A',    // Safari olive green
+          gold: '#B6872C',     // Golden mustard
+          beige: '#F9F5F0',    // Warm beige background
+          brown: '#7B4F2B',    // Earthy brown
+          coral: '#E3A983',    // Accent coral/peach
+          leaf: '#86A86F',     // Leafy green accent
         }
       },
       fontFamily: {
-        handwritten: ['Caveat', 'cursive'],
-        display: ['Quicksand', 'sans-serif'],
+        headline: ['Staatliches', 'cursive'],    // Safari/jungle stencil-style font
+        script: ['Pacifico', 'cursive'],         // Handwritten-style font
+        body: ['Poppins', 'sans-serif'],         // Rounded sans-serif
       },
       animation: {
         'bounce-in': 'bounce-in 0.5s ease-out',
@@ -28,7 +31,7 @@ export default {
         'slideInLeft': 'slideInLeft 0.5s ease-out',
         'slideInRight': 'slideInRight 0.5s ease-out',
         'fadeIn': 'fadeIn 1s ease-in',
-        'float': 'float 3s ease-in-out infinite',
+        'sway': 'sway 6s ease-in-out infinite',
       },
       keyframes: {
         'bounce-in': {
@@ -65,13 +68,13 @@ export default {
           '0%': { opacity: '0' },
           '100%': { opacity: '1' },
         },
-        'float': {
-          '0%, 100%': { transform: 'translateY(0)' },
-          '50%': { transform: 'translateY(-10px)' },
-        },
+        'sway': {
+          '0%, 100%': { transform: 'rotate(-3deg)' },
+          '50%': { transform: 'rotate(3deg)' },
+        }
       },
       boxShadow: {
-        'safari': '0 4px 14px -2px rgba(139, 110, 78, 0.15)',
+        'jungle': '0 4px 14px -2px rgba(123, 79, 43, 0.15)',
       }
     },
   },

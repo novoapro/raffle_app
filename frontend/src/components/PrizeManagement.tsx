@@ -66,19 +66,24 @@ const PrizeManagement: React.FC<PrizeManagementProps> = ({
 
   return (
     <>
-      <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-40">
-        <div className="bg-white p-6 rounded-lg shadow-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto">
-          <h2 className="text-xl font-bold mb-4">Prize Management</h2>
+      <div className="fixed inset-0 bg-jungle-brown/50 backdrop-blur-sm flex items-center justify-center z-40">
+        <div className="card max-w-4xl w-full max-h-[90vh] overflow-y-auto relative">
+          {/* Decorative elements */}
+          <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-jungle-green via-jungle-gold to-jungle-coral"></div>
+          <div className="absolute top-2 left-2 text-2xl animate-sway">🌿</div>
+          <div className="absolute top-2 right-2 text-2xl animate-sway" style={{ animationDelay: '0.5s' }}>🌿</div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <h2 className="safari-title text-center mb-8">Prize Management 🎁</h2>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {/* Prize Form */}
-            <div>
-              <h3 className="text-lg font-semibold mb-4">
-                {editingPrize ? 'Edit Prize' : 'Add New Prize'}
+            <div className="bg-white/50 rounded-xl p-6 shadow-jungle">
+              <h3 className="font-headline text-xl text-jungle-brown mb-6">
+                {editingPrize ? '✏️ Edit Prize' : '✨ Add New Prize'}
               </h3>
-              <form onSubmit={handleSubmit}>
-                <div className="mb-4">
-                  <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="name">
+              <form onSubmit={handleSubmit} className="space-y-6">
+                <div>
+                  <label className="block font-headline text-jungle-brown mb-2" htmlFor="name">
                     Name
                   </label>
                   <input
@@ -86,26 +91,26 @@ const PrizeManagement: React.FC<PrizeManagementProps> = ({
                     id="name"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    className="input w-full"
                     required
                   />
                 </div>
 
-                <div className="mb-4">
-                  <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="description">
+                <div>
+                  <label className="block font-headline text-jungle-brown mb-2" htmlFor="description">
                     Description
                   </label>
                   <textarea
                     id="description"
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
-                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    className="input w-full"
                     rows={3}
                   />
                 </div>
 
-                <div className="mb-4">
-                  <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="quantity">
+                <div>
+                  <label className="block font-headline text-jungle-brown mb-2" htmlFor="quantity">
                     Quantity
                   </label>
                   <input
@@ -114,13 +119,13 @@ const PrizeManagement: React.FC<PrizeManagementProps> = ({
                     value={quantity}
                     onChange={(e) => setQuantity(e.target.value)}
                     min="1"
-                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    className="input w-full"
                     required
                   />
                 </div>
 
-                <div className="mb-4">
-                  <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="photo">
+                <div>
+                  <label className="block font-headline text-jungle-brown mb-2" htmlFor="photo">
                     Photo
                   </label>
                   <input
@@ -128,11 +133,11 @@ const PrizeManagement: React.FC<PrizeManagementProps> = ({
                     id="photo"
                     onChange={(e) => setPhoto(e.target.files?.[0] || null)}
                     accept="image/*"
-                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    className="input w-full"
                   />
                 </div>
 
-                <div className="flex gap-2">
+                <div className="flex gap-4">
                   {editingPrize && (
                     <button
                       type="button"
@@ -143,14 +148,14 @@ const PrizeManagement: React.FC<PrizeManagementProps> = ({
                         setQuantity('1');
                         setPhoto(null);
                       }}
-                      className="px-4 py-2 bg-gray-200 text-gray-800 rounded hover:bg-gray-300"
+                      className="btn-secondary bg-jungle-brown/10 text-jungle-brown hover:bg-jungle-brown/20"
                     >
                       Cancel Edit
                     </button>
                   )}
                   <button
                     type="submit"
-                    className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+                    className="btn-primary flex-1"
                   >
                     {editingPrize ? 'Update Prize' : 'Add Prize'}
                   </button>
@@ -160,21 +165,22 @@ const PrizeManagement: React.FC<PrizeManagementProps> = ({
 
             {/* Prize List */}
             <div>
-              <h3 className="text-lg font-semibold mb-4">Current Prizes</h3>
-              <div className="space-y-4">
+              <h3 className="font-headline text-xl text-jungle-brown mb-6">Current Prizes 🏆</h3>
+              <div className="space-y-4 pr-2">
                 {prizes.map((prize) => (
-                  <div key={prize.id} className="border rounded p-4">
+                  <div key={prize.id} className="bg-white/50 rounded-xl p-4 shadow-jungle 
+                                               hover:scale-[1.02] transition-all duration-300">
                     <div className="flex justify-between items-start">
                       <div>
-                        <h4 className="font-bold">{prize.name}</h4>
+                        <h4 className="font-headline text-lg text-jungle-brown">{prize.name}</h4>
                         {prize.description && (
-                          <p className="text-gray-600 text-sm">{prize.description}</p>
+                          <p className="text-jungle-olive font-body mt-1">{prize.description}</p>
                         )}
-                        <p className="text-sm">
+                        <p className="font-body text-jungle-gold mt-2">
                           Quantity: {prize.quantity} (Remaining: {prize.remaining})
                         </p>
                         {prize.winners.length > 0 && (
-                          <p className="text-sm text-gray-600">
+                          <p className="font-body text-jungle-olive mt-1">
                             Winners: {prize.winners.join(', ')}
                           </p>
                         )}
@@ -182,7 +188,7 @@ const PrizeManagement: React.FC<PrizeManagementProps> = ({
                       <div className="flex gap-2">
                         <button
                           onClick={() => handleEditPrize(prize)}
-                          className="text-blue-500 hover:text-blue-600"
+                          className="btn-secondary p-2"
                         >
                           <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                             <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
@@ -190,7 +196,7 @@ const PrizeManagement: React.FC<PrizeManagementProps> = ({
                         </button>
                         <button
                           onClick={() => setPrizeToDelete(prize)}
-                          className="text-red-500 hover:text-red-600"
+                          className="btn-secondary bg-jungle-coral p-2"
                           disabled={prize.winners.length > 0}
                           title={prize.winners.length > 0 ? "Cannot delete prize that has been won" : "Delete prize"}
                         >
@@ -204,7 +210,7 @@ const PrizeManagement: React.FC<PrizeManagementProps> = ({
                       <img
                         src={prize.photo_path}
                         alt={prize.name}
-                        className="mt-2 w-full h-32 object-cover rounded"
+                        className="mt-4 w-full h-32 object-cover rounded-xl shadow-jungle"
                       />
                     )}
                   </div>
@@ -213,10 +219,10 @@ const PrizeManagement: React.FC<PrizeManagementProps> = ({
             </div>
           </div>
 
-          <div className="mt-6 flex justify-end">
+          <div className="mt-8 flex justify-end">
             <button
               onClick={onClose}
-              className="px-4 py-2 bg-gray-200 text-gray-800 rounded hover:bg-gray-300"
+              className="btn-secondary bg-jungle-brown/10 text-jungle-brown hover:bg-jungle-brown/20"
             >
               Close
             </button>

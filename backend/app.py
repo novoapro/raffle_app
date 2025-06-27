@@ -365,11 +365,14 @@ def pick_winner():
         }), 400
     
     weighted_participants = []
-    # Participants are weighted by their remaining tickets
-    for participant in eligible_participants:
-        remaining_tickets = participant['tickets'] - len(participant['prizes'])
-        weighted_participants.extend([participant] * remaining_tickets)
-    
+    if not settings.get('allow_multiple_wins', False):
+        # Weight participants by their remaining tickets
+        for participant in eligible_participants:
+            remaining_tickets = participant['tickets'] - len(participant['prizes'])
+            weighted_participants.extend([participant] * remaining_tickets)
+    else:
+        weighted_participants = eligible_participants
+ 
     winner = random.choice(weighted_participants)
     
     try:

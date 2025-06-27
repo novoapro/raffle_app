@@ -26,59 +26,85 @@ const Settings: React.FC<SettingsProps> = ({
 
   return (
     <>
-      <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-40">
-        <div className="bg-white p-6 rounded-lg shadow-lg max-w-md w-full">
-          <h2 className="text-xl font-bold mb-4">Settings</h2>
+      <div className="fixed inset-0 bg-jungle-brown/50 backdrop-blur-sm flex items-center justify-center z-40">
+        <div className="card max-w-md w-full relative overflow-hidden">
+          {/* Decorative elements */}
+          <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-jungle-green via-jungle-gold to-jungle-coral"></div>
+          <div className="absolute top-2 left-2 text-2xl animate-sway">🌿</div>
+          <div className="absolute top-2 right-2 text-2xl animate-sway" style={{ animationDelay: '0.5s' }}>🌿</div>
           
-          <div className="mb-4">
-            <label className="flex items-center space-x-2">
-              <input
-                type="checkbox"
-                checked={settings.auto_prize_selection}
-                onChange={(e) => onUpdateSettings({
-                  ...settings,
-                  auto_prize_selection: e.target.checked
-                })}
-                className="form-checkbox h-5 w-5 text-blue-600"
-              />
-              <span>Auto Prize Selection</span>
-            </label>
+          <h2 className="safari-title text-center mb-8">Safari Settings ⚙️</h2>
+          
+          <div className="space-y-6">
+            {/* Auto Prize Selection */}
+            <div className="group">
+              <label className="flex items-center gap-3 p-3 rounded-xl bg-white/50 hover:bg-white/80 
+                              transition-colors duration-300 cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={settings.auto_prize_selection}
+                  onChange={(e) => onUpdateSettings({
+                    ...settings,
+                    auto_prize_selection: e.target.checked
+                  })}
+                  className="form-checkbox h-5 w-5 text-jungle-green border-2 border-jungle-leaf 
+                           rounded focus:ring-jungle-green"
+                />
+                <div>
+                  <span className="font-headline text-jungle-brown">Auto Prize Selection</span>
+                  <p className="text-sm text-jungle-olive mt-1">
+                    Automatically select prizes for winners
+                  </p>
+                </div>
+              </label>
+            </div>
+
+            {/* Allow Multiple Wins */}
+            <div className="group">
+              <label className="flex items-center gap-3 p-3 rounded-xl bg-white/50 hover:bg-white/80 
+                              transition-colors duration-300 cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={settings.allow_multiple_wins}
+                  onChange={(e) => onUpdateSettings({
+                    ...settings,
+                    allow_multiple_wins: e.target.checked
+                  })}
+                  className="form-checkbox h-5 w-5 text-jungle-green border-2 border-jungle-leaf 
+                           rounded focus:ring-jungle-green"
+                />
+                <div>
+                  <span className="font-headline text-jungle-brown">Allow Multiple Wins</span>
+                  <p className="text-sm text-jungle-olive mt-1">
+                    Let participants win more than one prize
+                  </p>
+                </div>
+              </label>
+            </div>
           </div>
 
-          <div className="mb-6">
-            <label className="flex items-center space-x-2">
-              <input
-                type="checkbox"
-                checked={settings.allow_multiple_wins}
-                onChange={(e) => onUpdateSettings({
-                  ...settings,
-                  allow_multiple_wins: e.target.checked
-                })}
-                className="form-checkbox h-5 w-5 text-blue-600"
-              />
-              <span>Allow Multiple Wins</span>
-            </label>
-          </div>
-
-          <div className="border-t pt-4 space-y-2">
+          <div className="border-t border-jungle-green/10 mt-8 pt-6 space-y-4">
             <button
               onClick={() => setShowClearPrizesConfirm(true)}
-              className="w-full px-4 py-2 bg-yellow-500 text-white rounded hover:bg-yellow-600"
+              className="w-full btn-secondary bg-jungle-gold hover:bg-jungle-gold/90 flex items-center justify-center gap-2"
             >
+              <span>🎁</span>
               Clear All Prize Assignments
             </button>
+            
             <button
               onClick={() => setShowClearAllConfirm(true)}
-              className="w-full px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
+              className="w-full btn-secondary bg-jungle-coral hover:bg-jungle-coral/90 flex items-center justify-center gap-2"
             >
+              <span>🗑️</span>
               Clear All Data
             </button>
           </div>
 
-          <div className="mt-6 flex justify-end">
+          <div className="mt-8 flex justify-end">
             <button
               onClick={onClose}
-              className="px-4 py-2 bg-gray-200 text-gray-800 rounded hover:bg-gray-300"
+              className="btn-secondary bg-jungle-brown/10 text-jungle-brown hover:bg-jungle-brown/20"
             >
               Close
             </button>

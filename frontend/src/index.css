@@ -4,30 +4,65 @@
 
 @layer base {
   html {
-    font-family: 'Quicksand', system-ui, sans-serif;
+    font-family: 'Poppins', system-ui, sans-serif;
   }
   
   body {
-    @apply bg-safari-cream;
+    @apply bg-jungle-beige text-jungle-brown;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-headline text-jungle-brown;
   }
 }
 
 @layer components {
   .btn-primary {
-    @apply bg-safari-green text-white px-8 py-3 rounded-xl hover:bg-safari-lightGreen transition-all duration-300 disabled:opacity-50 font-semibold shadow-safari hover:shadow-lg;
+    @apply bg-jungle-green text-white px-8 py-3 rounded-xl 
+           hover:bg-jungle-leaf transition-all duration-300 
+           disabled:opacity-50 font-semibold shadow-jungle 
+           hover:shadow-lg uppercase tracking-wider;
+  }
+  
+  .btn-secondary {
+    @apply bg-jungle-coral text-white px-6 py-2 rounded-xl 
+           hover:bg-jungle-gold transition-all duration-300 
+           disabled:opacity-50 font-semibold shadow-jungle 
+           hover:shadow-lg;
   }
   
   .card {
-    @apply bg-white/80 backdrop-blur-sm rounded-2xl p-6 md:p-8 shadow-safari;
+    @apply bg-white/90 backdrop-blur-sm rounded-2xl p-6 md:p-8 
+           shadow-jungle border-2 border-jungle-olive/10
+           hover:border-jungle-olive/20 transition-all duration-300;
   }
   
   .input {
-    @apply rounded-xl border-safari-lightGreen border-2 px-4 py-3 focus:border-safari-green focus:ring focus:ring-safari-green/20 transition-all duration-300;
+    @apply rounded-xl border-jungle-leaf border-2 px-4 py-3 
+           focus:border-jungle-green focus:ring focus:ring-jungle-green/20 
+           transition-all duration-300 bg-white/80;
+  }
+
+  .safari-title {
+    @apply font-headline text-4xl md:text-5xl lg:text-6xl 
+           text-jungle-brown tracking-wider uppercase;
+  }
+
+  .jungle-accent {
+    @apply font-script text-jungle-gold text-xl md:text-2xl;
   }
 }
 
 @layer utilities {
   .text-shadow {
-    text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    text-shadow: 2px 2px 4px rgba(123, 79, 43, 0.1);
+  }
+
+  .text-shadow-lg {
+    text-shadow: 4px 4px 8px rgba(123, 79, 43, 0.2);
+  }
+
+  .leaf-pattern {
+    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 0c16.569 0 30 13.431 30 30 0 16.569-13.431 30-30 30C13.431 60 0 46.569 0 30 0 13.431 13.431 0 30 0zm0 8c-12.15 0-22 9.85-22 22s9.85 22 22 22 22-9.85 22-22-9.85-22-22-22zm0 4c9.941 0 18 8.059 18 18s-8.059 18-18 18-18-8.059-18-18 8.059-18 18-18z' fill='%2386A86F' fill-opacity='0.05' fill-rule='evenodd'/%3E%3C/svg%3E");
   }
 }

@@ -377,16 +377,20 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100">
+    <div className="min-h-screen bg-jungle-beige leaf-pattern">
       <div className="max-w-7xl mx-auto px-4 py-8">
         <Sidebar 
           onManagePrizes={() => setIsPrizeManagementOpen(true)}
           onOpenSettings={() => setIsSettingsOpen(true)}
         />
 
-        <header className="text-center mb-8">
-          <h1 className="text-4xl font-bold mb-2">Lucky Safari Raffle! 🦁</h1>
-          <p className="text-gray-600">Join the adventure and try your luck! 🌿</p>
+        <header className="text-center mb-12">
+          <h1 className="safari-title mb-4">
+            Lucky Safari Raffle! 🦁
+          </h1>
+          <p className="jungle-accent">
+            Join the adventure and try your luck! 🌿
+          </p>
         </header>
 
         <Settings
@@ -398,12 +402,12 @@ function App() {
           onClose={() => setIsSettingsOpen(false)}
         />
 
-        <div className="mb-8">
+        <div className="mb-8 text-center">
           <button
             onClick={() => setShowAddParticipant(true)}
-            className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+            className="btn-primary"
           >
-            Add Participant
+            Add Participant 🎪
           </button>
         </div>
 
@@ -421,7 +425,7 @@ function App() {
           title="Edit Participant"
         />
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8 items-start">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
           {participants.map(participant => (
             <ParticipantCard
               key={participant.id}
@@ -437,9 +441,9 @@ function App() {
           <button
             onClick={handlePickWinner}
             disabled={isLoading}
-            className="w-full max-w-md mx-auto block bg-green-500 text-white text-xl font-bold px-8 py-4 rounded-xl hover:bg-green-600 transition-all duration-300 disabled:opacity-50"
+            className="w-full max-w-md mx-auto block btn-primary text-xl font-bold animate-pulse-soft"
           >
-            {isLoading ? 'Drawing...' : 'Draw Winner! 🎯'}
+            {isLoading ? 'Drawing... 🎲' : 'Draw Winner! 🎯'}
           </button>
         )}
 
@@ -483,7 +487,7 @@ function App() {
         )}
 
         {error && (
-          <div className="fixed bottom-4 right-4 bg-red-500 text-white px-6 py-3 rounded-lg shadow-lg">
+          <div className="fixed bottom-4 right-4 bg-jungle-coral text-white px-6 py-3 rounded-lg shadow-jungle">
             {error}
           </div>
         )}

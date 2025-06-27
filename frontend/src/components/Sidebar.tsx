@@ -17,10 +17,12 @@ const Sidebar = ({ onManagePrizes, onOpenSettings }: SidebarProps) => {
       onMouseLeave={() => setIsExpanded(false)}
     >
       {/* Main sidebar content */}
-      <div className="bg-white rounded-l-lg shadow-lg p-4 space-y-4">
+      <div className="bg-jungle-green/90 backdrop-blur-sm rounded-l-xl shadow-jungle p-4 space-y-4">
         <button
           onClick={onManagePrizes}
-          className="whitespace-nowrap px-4 py-3 bg-gray-50 hover:bg-gray-100 text-gray-800 rounded-lg transition-colors font-medium flex items-center gap-3 w-full"
+          className="whitespace-nowrap px-4 py-3 bg-white/10 hover:bg-white/20 
+                   text-white rounded-xl transition-all font-headline tracking-wide 
+                   flex items-center gap-3 w-full hover:translate-x-1 duration-300"
         >
           <span className="text-xl">🎁</span>
           <span className="min-w-[7rem]">Manage Prizes</span>
@@ -28,7 +30,9 @@ const Sidebar = ({ onManagePrizes, onOpenSettings }: SidebarProps) => {
 
         <button
           onClick={onOpenSettings}
-          className="whitespace-nowrap px-4 py-3 bg-gray-50 hover:bg-gray-100 text-gray-800 rounded-lg transition-colors font-medium flex items-center gap-3 w-full"
+          className="whitespace-nowrap px-4 py-3 bg-white/10 hover:bg-white/20 
+                   text-white rounded-xl transition-all font-headline tracking-wide 
+                   flex items-center gap-3 w-full hover:translate-x-1 duration-300"
         >
           <span className="text-xl">⚙️</span>
           <span className="min-w-[7rem]">Settings</span>
@@ -37,12 +41,15 @@ const Sidebar = ({ onManagePrizes, onOpenSettings }: SidebarProps) => {
 
       {/* Handle */}
       <div 
-        className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-full h-24 w-12 bg-white rounded-l-lg shadow-lg flex items-center justify-center cursor-pointer"
+        className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-full 
+                 h-24 w-12 bg-jungle-green/90 backdrop-blur-sm rounded-l-xl shadow-jungle 
+                 flex items-center justify-center cursor-pointer hover:bg-jungle-green 
+                 transition-colors duration-300"
         onClick={() => setIsExpanded(!isExpanded)}
       >
-        <div className="text-gray-600 flex flex-col items-center gap-1">
-          <span className="text-xl">☰</span>
-          <span className="text-xs font-medium rotate-180" style={{ writingMode: 'vertical-rl' }}>
+        <div className="text-white flex flex-col items-center gap-1">
+          <span className="text-2xl">🌿</span>
+          <span className="font-headline tracking-wide rotate-180" style={{ writingMode: 'vertical-rl' }}>
             Menu
           </span>
         </div>
