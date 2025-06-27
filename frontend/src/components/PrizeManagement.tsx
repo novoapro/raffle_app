@@ -65,167 +65,215 @@ const PrizeManagement: React.FC<PrizeManagementProps> = ({
   };
 
   return (
-    <>
-      <div className="fixed inset-0 bg-jungle-brown/50 backdrop-blur-sm flex items-center justify-center z-40">
-        <div className="card max-w-4xl w-full max-h-[90vh] overflow-y-auto relative">
-          {/* Decorative elements */}
-          <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-jungle-green via-jungle-gold to-jungle-coral"></div>
-          <div className="absolute top-2 left-2 text-2xl animate-sway">🌿</div>
-          <div className="absolute top-2 right-2 text-2xl animate-sway" style={{ animationDelay: '0.5s' }}>🌿</div>
-          
-          <h2 className="safari-title text-center mb-8">Prize Management 🎁</h2>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {/* Prize Form */}
-            <div className="bg-white/50 rounded-xl p-6 shadow-jungle">
-              <h3 className="font-headline text-xl text-jungle-brown mb-6">
+    <div className="fixed inset-0 bg-jungle-brown/50 backdrop-blur-sm flex items-center justify-center z-40">
+      <div className="bg-white rounded-2xl w-full max-w-5xl max-h-[90vh] relative flex flex-col">
+        {/* Header - Fixed */}
+        <div className="flex items-center justify-between p-4 border-b border-jungle-green/10">
+          <h2 className="safari-title text-2xl">🎁 Prize Management</h2>
+          <button
+            onClick={onClose}
+            className="btn-secondary bg-jungle-brown/10 text-jungle-brown hover:bg-jungle-brown/20"
+          >
+            Close
+          </button>
+        </div>
+
+        {/* Content Area - Scrollable */}
+        <div className="flex-1 overflow-hidden flex">
+          {/* Left Side - Prize Form */}
+          <div className="w-[400px] border-r border-jungle-green/10 p-4 overflow-y-auto">
+            <div className="sticky top-0 bg-white pt-2">
+              <h3 className="font-headline text-xl text-jungle-brown mb-4">
                 {editingPrize ? '✏️ Edit Prize' : '✨ Add New Prize'}
               </h3>
-              <form onSubmit={handleSubmit} className="space-y-6">
-                <div>
-                  <label className="block font-headline text-jungle-brown mb-2" htmlFor="name">
-                    Name
-                  </label>
-                  <input
-                    type="text"
-                    id="name"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    className="input w-full"
-                    required
-                  />
-                </div>
-
-                <div>
-                  <label className="block font-headline text-jungle-brown mb-2" htmlFor="description">
-                    Description
-                  </label>
-                  <textarea
-                    id="description"
-                    value={description}
-                    onChange={(e) => setDescription(e.target.value)}
-                    className="input w-full"
-                    rows={3}
-                  />
-                </div>
-
-                <div>
-                  <label className="block font-headline text-jungle-brown mb-2" htmlFor="quantity">
-                    Quantity
-                  </label>
-                  <input
-                    type="number"
-                    id="quantity"
-                    value={quantity}
-                    onChange={(e) => setQuantity(e.target.value)}
-                    min="1"
-                    className="input w-full"
-                    required
-                  />
-                </div>
-
-                <div>
-                  <label className="block font-headline text-jungle-brown mb-2" htmlFor="photo">
-                    Photo
-                  </label>
-                  <input
-                    type="file"
-                    id="photo"
-                    onChange={(e) => setPhoto(e.target.files?.[0] || null)}
-                    accept="image/*"
-                    className="input w-full"
-                  />
-                </div>
-
-                <div className="flex gap-4">
-                  {editingPrize && (
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setEditingPrize(null);
-                        setName('');
-                        setDescription('');
-                        setQuantity('1');
-                        setPhoto(null);
-                      }}
-                      className="btn-secondary bg-jungle-brown/10 text-jungle-brown hover:bg-jungle-brown/20"
-                    >
-                      Cancel Edit
-                    </button>
-                  )}
-                  <button
-                    type="submit"
-                    className="btn-primary flex-1"
-                  >
-                    {editingPrize ? 'Update Prize' : 'Add Prize'}
-                  </button>
-                </div>
-              </form>
             </div>
 
-            {/* Prize List */}
-            <div>
-              <h3 className="font-headline text-xl text-jungle-brown mb-6">Current Prizes 🏆</h3>
-              <div className="space-y-4 pr-2">
-                {prizes.map((prize) => (
-                  <div key={prize.id} className="bg-white/50 rounded-xl p-4 shadow-jungle 
-                                               hover:scale-[1.02] transition-all duration-300">
-                    <div className="flex justify-between items-start">
-                      <div>
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <div>
+                <label className="block font-headline text-jungle-brown mb-1" htmlFor="name">
+                  Prize Name
+                </label>
+                <input
+                  type="text"
+                  id="name"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  className="input w-full"
+                  required
+                />
+              </div>
+
+              <div>
+                <label className="block font-headline text-jungle-brown mb-1" htmlFor="description">
+                  Description
+                </label>
+                <textarea
+                  id="description"
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
+                  className="input w-full"
+                  rows={3}
+                />
+              </div>
+
+              <div>
+                <label className="block font-headline text-jungle-brown mb-1" htmlFor="quantity">
+                  Quantity Available
+                </label>
+                <input
+                  type="number"
+                  id="quantity"
+                  value={quantity}
+                  onChange={(e) => setQuantity(e.target.value)}
+                  min="1"
+                  className="input w-full"
+                  required
+                />
+              </div>
+
+              <div>
+                <label className="block font-headline text-jungle-brown mb-1" htmlFor="photo">
+                  Prize Photo
+                </label>
+                <input
+                  type="file"
+                  id="photo"
+                  onChange={(e) => setPhoto(e.target.files?.[0] || null)}
+                  accept="image/*"
+                  className="input w-full"
+                />
+              </div>
+
+              <div className="flex gap-3 pt-2">
+                {editingPrize && (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setEditingPrize(null);
+                      setName('');
+                      setDescription('');
+                      setQuantity('1');
+                      setPhoto(null);
+                    }}
+                    className="btn-secondary bg-jungle-brown/10 text-jungle-brown hover:bg-jungle-brown/20"
+                  >
+                    Cancel Edit
+                  </button>
+                )}
+                <button
+                  type="submit"
+                  className="btn-primary flex-1"
+                >
+                  {editingPrize ? 'Update Prize' : 'Add Prize'}
+                </button>
+              </div>
+            </form>
+          </div>
+
+          {/* Right Side - Prize List */}
+          <div className="flex-1 p-4 pt-0 overflow-y-auto">
+            <h3 className="font-headline text-xl text-jungle-brown sticky top-0 bg-white pt-2 pb-4">
+              Current Prizes ({prizes.length})
+            </h3>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {prizes.map((prize) => (
+                <div 
+                  key={prize.id} 
+                  className="bg-white rounded-xl border-2 border-jungle-green/10 
+                           hover:border-jungle-green/20 transition-all duration-300 overflow-hidden"
+                >
+                  {/* Prize Image */}
+                  {prize.photo_path && (
+                    <div className="aspect-video w-full overflow-hidden bg-jungle-beige">
+                      <img
+                        src={prize.photo_path}
+                        alt={prize.name}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                  )}
+
+                  {/* Prize Content */}
+                  <div className="p-4">
+                    <div className="flex items-start justify-between gap-4">
+                      <div className="flex-1">
                         <h4 className="font-headline text-lg text-jungle-brown">{prize.name}</h4>
                         {prize.description && (
-                          <p className="text-jungle-olive font-body mt-1">{prize.description}</p>
-                        )}
-                        <p className="font-body text-jungle-gold mt-2">
-                          Quantity: {prize.quantity} (Remaining: {prize.remaining})
-                        </p>
-                        {prize.winners.length > 0 && (
-                          <p className="font-body text-jungle-olive mt-1">
-                            Winners: {prize.winners.join(', ')}
-                          </p>
+                          <p className="text-sm text-jungle-olive mt-1">{prize.description}</p>
                         )}
                       </div>
+                      
                       <div className="flex gap-2">
                         <button
                           onClick={() => handleEditPrize(prize)}
-                          className="btn-secondary p-2"
+                          className="p-2 rounded-lg hover:bg-jungle-green/10 transition-colors"
                         >
-                          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                          <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-jungle-green" viewBox="0 0 20 20" fill="currentColor">
                             <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
                           </svg>
                         </button>
                         <button
                           onClick={() => setPrizeToDelete(prize)}
-                          className="btn-secondary bg-jungle-coral p-2"
+                          className={`p-2 rounded-lg hover:bg-jungle-coral/10 transition-colors
+                                   ${prize.winners.length > 0 ? 'opacity-50 cursor-not-allowed' : ''}`}
                           disabled={prize.winners.length > 0}
                           title={prize.winners.length > 0 ? "Cannot delete prize that has been won" : "Delete prize"}
                         >
-                          <svg xmlns="http://www.w3.org/2000/svg" className={`h-5 w-5 ${prize.winners.length > 0 ? 'opacity-50' : ''}`} viewBox="0 0 20 20" fill="currentColor">
+                          <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-jungle-coral" viewBox="0 0 20 20" fill="currentColor">
                             <path fillRule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clipRule="evenodd" />
                           </svg>
                         </button>
                       </div>
                     </div>
-                    {prize.photo_path && (
-                      <img
-                        src={prize.photo_path}
-                        alt={prize.name}
-                        className="mt-4 w-full h-32 object-cover rounded-xl shadow-jungle"
-                      />
+
+                    {/* Prize Stats */}
+                    <div className="flex items-center gap-4 mt-3 text-sm">
+                      <div className="flex items-center gap-1">
+                        <span className="text-jungle-brown/60">Available:</span>
+                        <span className="font-headline text-jungle-green">
+                          {prize.remaining}/{prize.quantity}
+                        </span>
+                      </div>
+                      {prize.winners.length > 0 && (
+                        <div className="flex items-center gap-1">
+                          <span className="text-jungle-brown/60">Winners:</span>
+                          <span className="font-headline text-jungle-gold">
+                            {prize.winners.length}
+                          </span>
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Winners List */}
+                    {prize.winners.length > 0 && (
+                      <div className="mt-3 pt-3 border-t border-jungle-green/10">
+                        <div className="text-xs text-jungle-brown/60 mb-2">Winners:</div>
+                        <div className="flex flex-wrap gap-1">
+                          {prize.winners.map((winner, index) => (
+                            <span 
+                              key={index}
+                              className="inline-flex items-center px-2 py-1 rounded-full text-xs
+                                       bg-jungle-gold/10 text-jungle-gold"
+                            >
+                              {winner}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
                     )}
                   </div>
-                ))}
-              </div>
+                </div>
+              ))}
             </div>
-          </div>
 
-          <div className="mt-8 flex justify-end">
-            <button
-              onClick={onClose}
-              className="btn-secondary bg-jungle-brown/10 text-jungle-brown hover:bg-jungle-brown/20"
-            >
-              Close
-            </button>
+            {prizes.length === 0 && (
+              <div className="text-center py-12 bg-jungle-beige/30 rounded-xl">
+                <div className="text-4xl mb-3">🎁</div>
+                <p className="font-headline text-jungle-brown text-lg">No prizes added yet</p>
+                <p className="text-jungle-olive text-sm mt-1">Add your first prize using the form</p>
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -244,7 +292,7 @@ const PrizeManagement: React.FC<PrizeManagementProps> = ({
         }}
         onCancel={() => setPrizeToDelete(null)}
       />
-    </>
+    </div>
   );
 };
 

@@ -8,7 +8,7 @@
   }
   
   body {
-    @apply bg-jungle-beige text-jungle-brown;
+    @apply text-jungle-brown;
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -63,6 +63,79 @@
   }
 
   .leaf-pattern {
-    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 0c16.569 0 30 13.431 30 30 0 16.569-13.431 30-30 30C13.431 60 0 46.569 0 30 0 13.431 13.431 0 30 0zm0 8c-12.15 0-22 9.85-22 22s9.85 22 22 22 22-9.85 22-22-9.85-22-22-22zm0 4c9.941 0 18 8.059 18 18s-8.059 18-18 18-18-8.059-18-18 8.059-18 18-18z' fill='%2386A86F' fill-opacity='0.05' fill-rule='evenodd'/%3E%3C/svg%3E");
+    position: relative;
+    background-image: 
+      /* Large Monstera Leaf */
+      url("data:image/svg+xml,%3Csvg width='200' height='200' viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M100 20c0 0-30 20-30 60s30 60 30 60 30-20 30-60-30-60-30-60zm0 10c0 0-20 15-20 50s20 50 20 50 20-15 20-50-20-50-20-50zm-25 45c0 0 25-25 50 0m-50 15c0 0 25-25 50 0m-50 15c0 0 25-25 50 0' stroke='%2347624E' stroke-width='3' stroke-opacity='0.15' fill='none'/%3E%3C/svg%3E"),
+      /* Palm Frond */
+      url("data:image/svg+xml,%3Csvg width='160' height='160' viewBox='0 0 160 160' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M80 20c-40 40-40 80 0 120m0-120c40 40 40 80 0 120m-30-60h60M65 40c0 0 15 15 30 0m-30 80c0 0 15-15 30 0m-20-60c0 0 10 10 20 0m-20 40c0 0 10-10 20 0' stroke='%236A754A' stroke-width='3' stroke-opacity='0.12' fill='none'/%3E%3C/svg%3E"),
+      /* Fern Leaves */
+      url("data:image/svg+xml,%3Csvg width='120' height='120' viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M60 20c-20 20-20 40 0 60m0-60c20 20 20 40 0 60m-15-30h30m-25 0c0 0 10-10 20 0m-20 20c0 0 10 10 20 0' stroke='%2386A86F' stroke-width='2.5' stroke-opacity='0.15' fill='none'/%3E%3C/svg%3E"),
+      /* Bamboo Stalks */
+      url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 0v100m40-100v100M30 20h40M30 40h40M30 60h40M30 80h40' stroke='%237B4F2B' stroke-width='2.5' stroke-opacity='0.12' fill='none'/%3E%3C/svg%3E"),
+      /* Tropical Leaf */
+      url("data:image/svg+xml,%3Csvg width='180' height='180' viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M90 30c-30 0-60 60-60 90s30 30 60 30 60-0 60-30-30-90-60-90zm0 30c0 0-30 30-30 60s30 15 30 15 30-15 30-45-30-30-30-30z' fill='%2347624E' fill-opacity='0.12'/%3E%3C/svg%3E"),
+      /* Small Leaves */
+      url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 10c-10 0-20 20-20 30s10 10 20 10 20 0 20-10-10-30-20-30zm0 10c0 0-10 10-10 20s10 5 10 5 10-5 10-15-10-10-10-10z' fill='%2386A86F' fill-opacity='0.12'/%3E%3C/svg%3E"),
+      /* Vines with darker shadows */
+      url("data:image/svg+xml,%3Csvg width='150' height='150' viewBox='0 0 150 150' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 75c25-25 50-25 75 0s50 25 75 0m-150 25c25-25 50-25 75 0s50 25 75 0' stroke='%236A754A' stroke-width='2' stroke-opacity='0.15' fill='none' filter='drop-shadow(0 1px 1px rgba(0,0,0,0.2))'/%3E%3C/svg%3E"),
+      /* Dark Overlay Pattern */
+      url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='100' height='100' fill='%23000000' fill-opacity='0.03'/%3E%3C/svg%3E");
+    background-size: 
+      400px 400px,  /* Monstera */
+      320px 320px,  /* Palm */
+      240px 240px,  /* Fern */
+      200px 200px,  /* Bamboo */
+      360px 360px,  /* Tropical */
+      120px 120px,  /* Small Leaves */
+      300px 300px,  /* Vines */
+      100px 100px;  /* Dark Overlay */
+    background-position: 
+      0 0,
+      100px 100px,
+      -50px -50px,
+      25px 25px,
+      200px 200px,
+      -25px -25px,
+      150px 150px,
+      0 0;
+    background-repeat: repeat;
+    animation: jungle-pattern-drift 120s linear infinite;
+    /* Add a subtle shadow overlay */
+    box-shadow: inset 0 0 100px rgba(71, 98, 78, 0.1);
+  }
+
+  /* Add a darker overlay when used on white backgrounds */
+  .card .leaf-pattern::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(71, 98, 78, 0.03);
+    pointer-events: none;
+  }
+}
+
+@keyframes jungle-pattern-drift {
+  0% {
+    background-position: 
+      0 0,
+      100px 100px,
+      -50px -50px,
+      25px 25px,
+      200px 200px,
+      -25px -25px,
+      150px 150px,
+      0 0;
+  }
+  100% {
+    background-position: 
+      400px 400px,
+      420px 420px,
+      190px 190px,
+      225px 225px,
+      560px 560px,
+      95px 95px,
+      450px 450px,
+      100px 100px;
   }
 }

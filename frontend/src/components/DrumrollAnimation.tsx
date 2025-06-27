@@ -51,7 +51,6 @@ const DrumrollAnimation: React.FC<DrumrollAnimationProps> = ({ onComplete }) => 
     <div className="fixed inset-0 bg-jungle-brown/50 backdrop-blur-sm flex items-center justify-center z-50">
       <div className="card max-w-2xl w-full text-center relative overflow-hidden">
         {/* Decorative elements */}
-        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-jungle-green via-jungle-gold to-jungle-coral"></div>
         <div className="absolute top-2 left-2 text-2xl animate-sway">🌿</div>
         <div className="absolute top-2 right-2 text-2xl animate-sway" style={{ animationDelay: '0.5s' }}>🌿</div>
         

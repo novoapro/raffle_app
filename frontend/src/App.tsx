@@ -377,7 +377,7 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-jungle-beige leaf-pattern">
+    <div className="min-h-screen bg-jungle-beige/20">
       <div className="max-w-7xl mx-auto px-4 py-8">
         <Sidebar 
           onManagePrizes={() => setIsPrizeManagementOpen(true)}
@@ -427,13 +427,14 @@ function App() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
           {participants.map(participant => (
-            <ParticipantCard
-              key={participant.id}
-              allowMultipleWins={settings.allow_multiple_wins}
-              participant={participant}
-              onEdit={setEditingParticipant}
-              onDelete={handleDeleteParticipant}
-            />
+            <div key={participant.id} className="flex flex-col h-full">
+              <ParticipantCard
+          allowMultipleWins={settings.allow_multiple_wins}
+          participant={participant}
+          onEdit={setEditingParticipant}
+          onDelete={handleDeleteParticipant}
+              />
+            </div>
           ))}
         </div>
 

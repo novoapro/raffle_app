@@ -32,6 +32,7 @@ export default {
         'slideInRight': 'slideInRight 0.5s ease-out',
         'fadeIn': 'fadeIn 1s ease-in',
         'sway': 'sway 6s ease-in-out infinite',
+        'spin-slow': 'spin 3s linear infinite',
       },
       keyframes: {
         'bounce-in': {

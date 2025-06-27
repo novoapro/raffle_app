@@ -8,7 +8,7 @@ from werkzeug.utils import secure_filename
 import cv2
 import base64
 
-app = Flask(__name__, static_folder='frontend/build/static')
+app = Flask(__name__, static_folder='../frontend/dist')
 CORS(app)  # Enable CORS for all routes
 
 # Configure upload folders
@@ -76,12 +76,12 @@ def process_base64_image(base64_string, folder):
         print(f"Error processing base64 image: {e}")
         return None
 
-@app.route('/', defaults={'path': ''})
+@app.route('/', defaults={'path': 'index.html'})
 @app.route('/<path:path>')
 def serve_react(path):
     if path != "" and os.path.exists(app.static_folder + '/' + path):
         return send_from_directory(app.static_folder, path)
-    return send_from_directory('frontend/build', 'index.html')
+    return send_from_directory('frontend/dist', 'index.html')
 
 @app.route('/api/uploads/participants/<path:filename>')
 def serve_participant_photo(filename):
@@ -373,6 +373,7 @@ def pick_winner():
     else:
         weighted_participants = eligible_participants
  
+    print(f"Weighted participants: {len(weighted_participants)}")
     winner = random.choice(weighted_participants)
     
     try:

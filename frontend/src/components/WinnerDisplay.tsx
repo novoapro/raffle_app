@@ -74,12 +74,14 @@ const WinnerDisplay: React.FC<WinnerDisplayProps> = ({
 
   return (
     <div className="fixed inset-0 bg-jungle-brown/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-      <div className="card max-w-5xl w-full relative">
+      <div className="card max-w-5xl w-full relative overflow-hidden">
         {/* Decorative elements */}
         <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-jungle-green via-jungle-gold to-jungle-coral"></div>
         <div className="absolute top-2 left-2 text-2xl animate-sway">🌿</div>
         <div className="absolute top-2 right-2 text-2xl animate-sway" style={{ animationDelay: '0.5s' }}>🌿</div>
-
+        {/* Animated jungle elements */}
+        {/* Render this decorative layer below the main card content */}
+  
         {/* Main content */}
         <div className="text-center mb-8 relative animate-fadeIn">
           <h2 className="safari-title mb-2 text-shadow-lg animate-bounce">
@@ -113,7 +115,7 @@ const WinnerDisplay: React.FC<WinnerDisplayProps> = ({
                   </div>
                 )}
               </div>
-              <h4 className="safari-title mt-4  text-4xl animate-fadeIn text-center">{winner}</h4>
+              <h4 className="safari-title mt-4 text-4xl animate-fadeIn text-center whitespace-nowrap overflow-hidden text-ellipsis">{winner}</h4>
             </div>
           </div>
 
@@ -140,7 +142,7 @@ const WinnerDisplay: React.FC<WinnerDisplayProps> = ({
                 )}
               </div>
               <div className="mt-4 text-center">
-                <h4 className="safari-title text-4xl animate-fadeIn mb-2">{prize}</h4>
+                <h4 className="safari-title text-4xl animate-fadeIn mb-2safari-title mt-4 text-4xl animate-fadeIn text-center whitespace-nowrap overflow-hidden text-ellipsis">{prize}</h4>
               </div>
             </div>
           </div>
@@ -162,24 +164,7 @@ const WinnerDisplay: React.FC<WinnerDisplayProps> = ({
           </button>
         </div>
 
-        {/* Animated jungle elements */}
-        <div className="absolute inset-0 pointer-events-none">
-          {[...Array(8)].map((_, i) => (
-            <div
-              key={i}
-              className="absolute animate-sway"
-              style={{
-                top: `${Math.random() * 100}%`,
-                left: `${Math.random() * 100}%`,
-                animationDelay: `${Math.random() * 2}s`,
-                animationDuration: `${3 + Math.random() * 3}s`,
-                opacity: 0.3,
-              }}
-            >
-              {['🌿', '🍃', '🌴', '🦁', '🐘', '🦒', '🦓', '🦍'][i]}
-            </div>
-          ))}
-        </div>
+        
       </div>
     </div>
   );
