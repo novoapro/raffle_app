@@ -19,7 +19,7 @@ const ParticipantCard: React.FC<ParticipantCardProps> = ({
 
   // Calculate remaining tickets based on settings
   const hasWonPrizes = participant.prizes && participant.prizes.length > 0;
-  const remainingTickets = allowMultipleWins 
+  const remainingTickets = allowMultipleWins
     ? participant.tickets - (participant.prizes?.length || 0)
     : hasWonPrizes ? 0 : participant.tickets;
 
@@ -61,8 +61,7 @@ const ParticipantCard: React.FC<ParticipantCardProps> = ({
                   {/* Info Section */}
                   <div className={`"flex-grow min-w-0 py-1`}>
                     {/* Name with fun dot decoration */}
-                    <div className="relative">
-                      <div className="absolute -left-2 top-3 w-1.5 h-1.5 rounded-full bg-jungle-green/40"></div>
+                    <div className="relative flex items-center juastify-center">
                       <h3 className="font-headline text-xl text-jungle-brown pl-2 break-words leading-tight max-w-full">
                         {participant.name}
                       </h3>
@@ -71,11 +70,13 @@ const ParticipantCard: React.FC<ParticipantCardProps> = ({
                     {/* Status Badge */}
                     <div className="mt-2 flex items-center gap-2">
                       <div className={`inline-flex items-center gap-2 px-3 py-1 rounded-full text-sm
-                                  ${canParticipate 
-                                    ? 'bg-jungle-green/10 text-jungle-green border border-jungle-green/20' 
-                                    : 'bg-jungle-coral/10 text-jungle-coral border border-jungle-coral/20 grayscale'}`}>
-                        <span className={`w-2 h-2 rounded-full animate-ping opacity-75
-                                    ${canParticipate ? 'bg-jungle-green' : 'bg-jungle-coral'}`}></span>
+                                  ${canParticipate
+                          ? 'bg-jungle-green/10 text-jungle-green border border-jungle-green/20'
+                          : 'bg-jungle-coral/10 text-jungle-coral border border-jungle-coral/20 grayscale'}`}>
+                        {canParticipate && (
+                          <span className='w-2 h-2 rounded-full animate-ping opacity-75 bg-jungle-green'></span>
+                        )}
+
                         {canParticipate ? 'Ready to Play!' : 'Taking a Break'}
                       </div>
                     </div>
@@ -85,7 +86,7 @@ const ParticipantCard: React.FC<ParticipantCardProps> = ({
                       <button
                         onClick={() => onEdit(participant)}
                         className={`p-2 rounded-xl hover:scale-110 transition-all duration-200 bg-jungle-green/10 text-jungle-green hover:bg-jungle-green/20`}
-                        title={ "Edit participant"}
+                        title={"Edit participant"}
                       >
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
                           <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
@@ -106,7 +107,7 @@ const ParticipantCard: React.FC<ParticipantCardProps> = ({
               </div>
 
               {/* Tickets Section with Fun Background */}
-                <div className={`mt-4 px-4 py-3 rounded-2xl overflow-hidden bg-gradient-to-r from-jungle-green/5 via-transparent to-jungle-green/5
+              <div className={`mt-4 px-4 py-3 rounded-2xl overflow-hidden bg-gradient-to-r from-jungle-green/5 via-transparent to-jungle-green/5
                                 ${!canParticipate ? 'grayscale' : ''} `}>
                 <div className="flex items-center justify-around gap-4">
                   {/* Total Tickets */}
@@ -161,11 +162,11 @@ const ParticipantCard: React.FC<ParticipantCardProps> = ({
                           Prize{participant.prizes.length > 1 ? 's' : ''} Won: ({participant.prizes.length})
                         </span>
                       </div>
-                      
+
                       <div className="flex flex-wrap gap-2">
                         {participant.prizes.length <= 2 ? (
                           participant.prizes.map((prize, index) => (
-                            <div 
+                            <div
                               key={index}
                               className="bg-white/80 backdrop-blur-sm px-3 py-1 rounded-full text-sm 
                                        text-jungle-gold border border-jungle-gold/20 shadow-sm

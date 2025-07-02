@@ -39,6 +39,16 @@ const EditModal: React.FC<EditModalProps> = ({ isOpen, onClose, onSave, particip
 
   if (!isOpen) return null;
 
+  const handleClose = () => {
+    setPhotoPreview(null);
+    setName('');
+    setTickets('1'); 
+    onClose();
+    setJustAdded(false);
+    setAddAnother(false);
+    setSaving(false);
+  }
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setSaving(true);
@@ -54,17 +64,14 @@ const EditModal: React.FC<EditModalProps> = ({ isOpen, onClose, onSave, particip
       ...(photoData ? { photo_path: photoData } : {}),
       addAnother
     });
-    setSaving(false);
-    if (addAnother) {
-      setName('');
-      setTickets('1');
-      setPhotoPreview(null);
-      setShowWebcam(true);
-      setJustAdded(true);
-    } else {
+    if(!addAnother) {
       onClose();
     }
-    setAddAnother(false);
+    setSaving(false);
+    setJustAdded(true);
+    setName('');
+    setTickets('1');
+    setPhotoPreview(null);
   };
 
   return (
@@ -126,24 +133,27 @@ const EditModal: React.FC<EditModalProps> = ({ isOpen, onClose, onSave, particip
             <div className="flex justify-end gap-4 pt-4">
               <button
                 type="button"
-                onClick={onClose}
+                onClick={handleClose}
                 className="btn-secondary bg-jungle-brown/10 text-jungle-brown hover:bg-jungle-brown/20"
                 disabled={saving}
               >
                 Cancel
               </button>
+              {!participant && (
+                <button
+                  type="button"
+                  className="btn-secondary"
+                  disabled={saving}
+                  onClick={() => { setAddAnother(true); setTimeout(() => { document.getElementById('edit-modal-form')?.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true })); }, 0); }}
+                >
+                  Save & Add Another
+                </button>
+              )}
               <button
                 type="button"
-                className="btn-secondary"
-                disabled={saving}
-                onClick={() => { setAddAnother(true); setTimeout(() => { document.getElementById('edit-modal-form')?.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true })); }, 0); }}
-              >
-                Save & Add Another
-              </button>
-              <button
-                type="submit"
                 className="btn-primary"
                 disabled={saving}
+                onClick={() => { setAddAnother(false); setTimeout(() => { document.getElementById('edit-modal-form')?.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true })); }, 0); }}
               >
                 {saving ? 'Saving...' : 'Save'}
               </button>
