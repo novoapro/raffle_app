@@ -379,22 +379,41 @@ function App() {
       <div className="min-h-screen">
         <div className="max-w-7xl mx-auto px-4 py-8">
           <Sidebar
-            isLoadingData= {isLoading} 
-            participantCounter={participants.length}    
+            isLoadingData={isLoading}
+            participantCounter={participants.length}
             onPickAWinner={handlePickWinner}
             onManagePrizes={() => setIsPrizeManagementOpen(true)}
             onOpenSettings={() => setIsSettingsOpen(true)}
           />
 
-          <header className="text-center mb-12">
-            <h1 className="safari-title mb-4">
-              Lucky Safari Raffle! 🦁
-            </h1>
-            <p className="jungle-accent">
-              Join the adventure and try your luck! 🌿
-            </p>
+          <header
+            className="fixed top-0 left-0 w-full flex justify-center z-0 pointer-events-none"
+            style={{ background: "transparent" }}
+          >
+            <img
+              src="./public/assets/banner.png"
+              alt="Raffle App Logo"
+              className="bg-transparent mx-auto"
+              style={{ maxWidth: "100%", height: "auto" }}
+            />
           </header>
-
+          <div className="" /> {/* Spacer to prevent content from being hidden behind the fixed header */}
+            <div className="flex flex-col items-center justify-center">
+            <img
+              src="./public/assets/title.png"
+              alt="Raffle App Title"
+              className="mx-auto"
+              style={{ maxWidth: "60%", width: "100%", height: "auto", zIndex: 20 }}
+            />
+            </div>
+            <div className="" /> {/* Spacer to prevent content from being hidden behind the fixed header */}
+            <div className="flex flex-col items-center justify-center">
+            <img
+              src="./public/assets/animals.png"
+              alt="Raffle App Title"
+              className="mx-auto"
+            />
+            </div>
           <Settings
             settings={settings}
             onUpdateSettings={updateSettings}
@@ -404,7 +423,7 @@ function App() {
             onClose={() => setIsSettingsOpen(false)}
           />
 
-          <div className="flex justify-center gap-4 items-center mb-8">
+          <div className="flex justify-center gap-4 items-center mb-8 mt-8">
             <button
               onClick={() => setShowAddParticipant(true)}
               className="btn-primary text-xl font-bold"

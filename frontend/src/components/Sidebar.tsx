@@ -62,7 +62,7 @@ const Sidebar = ({ isLoadingData, participantCounter, onManagePrizes, onOpenSett
                  transition-colors duration-300"
         onClick={() => setIsExpanded(!isExpanded)}
       >
-        <div className="text-white flex flex-col items-center gap-1">
+        <div className="text-white flex flex-col items-center">
           <span className="text-2xl">🌿</span>
           <span className="font-headline tracking-wide rotate-180" style={{ writingMode: 'vertical-rl' }}>
             Menu
