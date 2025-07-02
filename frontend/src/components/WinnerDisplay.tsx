@@ -20,13 +20,13 @@ const WinnerDisplay: React.FC<WinnerDisplayProps> = ({
 }) => {
   useEffect(() => {
     // Create a more elaborate confetti effect with jungle colors
-    const duration = 15 * 1000;
+    const duration = 30 * 1000;
     const animationEnd = Date.now() + duration;
     const defaults = {
       startVelocity: 30,
       spread: 360,
       ticks: 60,
-      zIndex: 0,
+      zIndex: 200,
       colors: ['#47624E', '#6A754A', '#B6872C', '#7B4F2B', '#E3A983', '#86A86F']
     };
 

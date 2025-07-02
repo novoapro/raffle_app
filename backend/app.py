@@ -324,7 +324,7 @@ def pick_winner():
         }), 400
     
     data = request.json
-    prize_id = data.get('prize_id')
+    prize_id = int(data.get('prize_id')) if data.get('prize_id') else None
     auto_select = data.get('auto_select', False)
     settings = db.get_settings()
     
@@ -425,7 +425,17 @@ def clear_all_data():
 @app.route('/api/get_participants', methods=['GET'])
 def get_participants():
     """Endpoint to get all participants"""  
-    return jsonify(db.get_participants())
+    participants = db.get_participants()
+    # Sort participants: those with remaining wins/tickets first
+    def has_remaining_wins(p):
+        if settings.get('allow_multiple_wins', False):
+            return (p['tickets'] - len(p['prizes'])) > 0
+        else:
+            return len(p['prizes']) == 0
+
+    participants = sorted(participants, key=has_remaining_wins, reverse=True)
+
+    return jsonify(participants)
 
 if __name__ == '__main__':
     app.run(debug=True)

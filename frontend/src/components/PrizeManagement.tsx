@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import type { Prize } from '../types';
 import ConfirmDialog from './ConfirmDialog';
+import DialogHeader from './DialogHeader';
 
 interface PrizeManagementProps {
   isOpen: boolean;
@@ -66,18 +67,12 @@ const PrizeManagement: React.FC<PrizeManagementProps> = ({
 
   return (
     <div className="fixed inset-0 bg-jungle-brown/50 backdrop-blur-sm flex items-center justify-center z-40">
-      <div className="bg-white rounded-2xl w-full max-w-5xl max-h-[90vh] relative flex flex-col">
-        {/* Header - Fixed */}
-        <div className="flex items-center justify-between p-4 border-b border-jungle-green/10">
-          <h2 className="safari-title text-2xl">🎁 Prize Management</h2>
-          <button
-            onClick={onClose}
-            className="btn-secondary bg-jungle-brown/10 text-jungle-brown hover:bg-jungle-brown/20"
-          >
-            Close
-          </button>
-        </div>
-
+      <div className="bg-white rounded-2xl w-full max-w-5xl max-h-[90vh] relative flex flex-col overflow-hidden">
+       <DialogHeader
+          title={editingPrize ? 'Edit Prize' : 'Add New Prize'}
+          message={editingPrize ? 'Update the prize details below.' : 'Fill in the details for the new prize.'}
+          onClose={onClose}
+        />
         {/* Content Area - Scrollable */}
         <div className="flex-1 overflow-hidden flex">
           {/* Left Side - Prize Form */}

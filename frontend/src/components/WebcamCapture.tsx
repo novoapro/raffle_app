@@ -23,7 +23,7 @@ const WebcamCapture: React.FC<WebcamCaptureProps> = ({ onCapture, onCancel }) =>
 
   return (
     <div className="fixed inset-0 bg-jungle-brown/50 backdrop-blur-sm flex items-center justify-center z-50">
-      <div className="card max-w-md w-full relative">
+      <div className="card max-w-md w-full relative overflow-hidden">
         {/* Decorative elements */}
         <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-jungle-green via-jungle-gold to-jungle-coral"></div>
         <div className="absolute top-2 left-2 text-2xl animate-sway">🌿</div>

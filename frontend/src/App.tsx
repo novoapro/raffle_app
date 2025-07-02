@@ -1,4 +1,6 @@
-import { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react';
+import type { Participant, Prize, RaffleSettings, ApiResponse } from './types';
+import SafariBackground from './components/SafariBackground';
 import EditModal from './components/EditModal'
 import ParticipantCard from './components/ParticipantCard'
 import WinnerDisplay from './components/WinnerDisplay'
@@ -8,7 +10,6 @@ import PrizePrompt from './components/PrizePrompt'
 import PrizeManagement from './components/PrizeManagement'
 import DrumrollAnimation from './components/DrumrollAnimation'
 import Sidebar from './components/Sidebar'
-import type { Participant, Prize, ApiResponse, RaffleSettings } from './types'
 
 const API = {
   GET_PARTICIPANTS: '/api/get_participants',
@@ -28,14 +29,13 @@ function App() {
   const [editingParticipant, setEditingParticipant] = useState<Participant | null>(null);
   const [showAddParticipant, setShowAddParticipant] = useState(false);
   const [winner, setWinner] = useState<string | null>(null);
-  const [winnerTickets, setWinnerTickets] = useState<number | null>(null);
   const [winnerAnimal, setWinnerAnimal] = useState<string | null>(null);
   const [winnerPrize, setWinnerPrize] = useState<string | null>(null);
   const [winnerPhoto, setWinnerPhoto] = useState<string | null>(null);
   const [winnerPrizePhoto, setWinnerPrizePhoto] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [settings, setSettings] = useState<RaffleSettings>({ 
+  const [settings, setSettings] = useState<RaffleSettings>({
     allow_multiple_wins: false,
     auto_prize_selection: true
   });
@@ -99,7 +99,7 @@ function App() {
         },
         body: JSON.stringify(newSettings),
       });
-      
+
       if (!response.ok) throw new Error('Failed to update settings');
       const data = await response.json();
       setSettings(data.settings);
@@ -114,7 +114,7 @@ function App() {
       const response = await fetch(API.CLEAR_PRIZES, {
         method: 'POST',
       });
-      
+
       if (!response.ok) throw new Error('Failed to clear prizes');
       await fetchParticipants();
       await fetchPrizes();
@@ -129,7 +129,7 @@ function App() {
       const response = await fetch(API.CLEAR_ALL_DATA, {
         method: 'POST',
       });
-      
+
       if (!response.ok) throw new Error('Failed to clear data');
       await fetchParticipants();
       await fetchPrizes();
@@ -154,10 +154,10 @@ function App() {
         method: 'POST',
         body: formData,
       });
-      
+
       if (!response.ok) throw new Error('Failed to add participant');
       const data: ApiResponse = await response.json();
-      
+
       if (data.status === 'success') {
         setShowAddParticipant(false);
         await fetchParticipants();
@@ -183,10 +183,10 @@ function App() {
         method: 'POST',
         body: formData,
       });
-      
+
       if (!response.ok) throw new Error('Failed to edit participant');
       const data: ApiResponse = await response.json();
-      
+
       if (data.status === 'success') {
         setEditingParticipant(null);
         await fetchParticipants();
@@ -209,10 +209,10 @@ function App() {
         },
         body: JSON.stringify({ id }),
       });
-      
+
       if (!response.ok) throw new Error('Failed to delete participant');
       const data: ApiResponse = await response.json();
-      
+
       if (data.status === 'success') {
         setEditingParticipant(null);
         await fetchParticipants();
@@ -232,10 +232,10 @@ function App() {
         method: 'POST',
         body: formData,
       });
-      
+
       if (!response.ok) throw new Error('Failed to add prize');
       const data: ApiResponse = await response.json();
-      
+
       if (data.status === 'success') {
         await fetchPrizes();
       }
@@ -254,10 +254,10 @@ function App() {
         method: 'PUT',
         body: formData,
       });
-      
+
       if (!response.ok) throw new Error('Failed to update prize');
       const data: ApiResponse = await response.json();
-      
+
       if (data.status === 'success') {
         await fetchPrizes();
       }
@@ -279,10 +279,10 @@ function App() {
         },
         body: JSON.stringify({ prize_id: prizeId }),
       });
-      
+
       if (!response.ok) throw new Error('Failed to delete prize');
       const data: ApiResponse = await response.json();
-      
+
       if (data.status === 'success') {
         await fetchPrizes();
       }
@@ -295,9 +295,9 @@ function App() {
   };
 
   const handlePickWinner = async () => {
-    if(!settings.auto_prize_selection) {
+    if (!settings.auto_prize_selection) {
       setIsPrizePromptOpen(true);
-    } else{
+    } else {
       await performDraw(settings.auto_prize_selection);
     }
   };
@@ -312,13 +312,13 @@ function App() {
         },
         body: JSON.stringify({ prize_id: prizeId, auto_select: autoSelect }),
       });
-      
+
       if (!response.ok && response.headers.get('Content-Type')?.includes('application/json')) {
         const errorData: ApiResponse = await response.json();
         throw new Error(errorData.message || 'Failed to pick winner');
       };
       const data: ApiResponse = await response.json();
-      
+
       if (data.status === 'success' && data.winner) {
         // Store winner data temporarily
         setWinnerData({
@@ -329,10 +329,10 @@ function App() {
           photo: data.photo || null,
           prizePhoto: data.prize_photo || null,
         });
-        
+
         // Show drumroll animation
         setShowDrumroll(true);
-        
+
         await fetchParticipants();
         await fetchPrizes();
       }
@@ -357,18 +357,16 @@ function App() {
 
   const resetWinner = () => {
     setWinner(null);
-    setWinnerTickets(null);
     setWinnerAnimal(null);
     setWinnerPrize(null);
     setWinnerPhoto(null);
     setWinnerPrizePhoto(null);
   };
 
-    const handleDrumrollComplete = () => {
+  const handleDrumrollComplete = () => {
     setShowDrumroll(false);
     if (winnerData) {
       setWinner(winnerData.winner);
-      setWinnerTickets(winnerData.tickets);
       setWinnerAnimal(winnerData.animal);
       setWinnerPrize(winnerData.prize);
       setWinnerPhoto(winnerData.photo);
@@ -377,123 +375,117 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-jungle-beige/20">
-      <div className="max-w-7xl mx-auto px-4 py-8">
-        <Sidebar 
-          onManagePrizes={() => setIsPrizeManagementOpen(true)}
-          onOpenSettings={() => setIsSettingsOpen(true)}
-        />
-
-        <header className="text-center mb-12">
-          <h1 className="safari-title mb-4">
-            Lucky Safari Raffle! 🦁
-          </h1>
-          <p className="jungle-accent">
-            Join the adventure and try your luck! 🌿
-          </p>
-        </header>
-
-        <Settings
-          settings={settings}
-          onUpdateSettings={updateSettings}
-          onClearPrizes={clearPrizes}
-          onClearAllData={clearAllData}
-          isOpen={isSettingsOpen}
-          onClose={() => setIsSettingsOpen(false)}
-        />
-
-        <div className="mb-8 text-center">
-          <button
-            onClick={() => setShowAddParticipant(true)}
-            className="btn-primary"
-          >
-            Add Participant 🎪
-          </button>
-        </div>
-
-        <EditModal
-          isOpen={showAddParticipant}
-          onClose={() => setShowAddParticipant(false)}
-          onSave={handleAddParticipant}
-        />
-
-        <EditModal
-          isOpen={!!editingParticipant}
-          onClose={() => setEditingParticipant(null)}
-          onSave={handleEditParticipant}
-          participant={editingParticipant || undefined}
-          title="Edit Participant"
-        />
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-          {participants.map(participant => (
-            <div key={participant.id} className="flex flex-col h-full">
-              <ParticipantCard
-          allowMultipleWins={settings.allow_multiple_wins}
-          participant={participant}
-          onEdit={setEditingParticipant}
-          onDelete={handleDeleteParticipant}
-              />
-            </div>
-          ))}
-        </div>
-
-        {participants.length > 0 && (
-          <button
-            onClick={handlePickWinner}
-            disabled={isLoading}
-            className="w-full max-w-md mx-auto block btn-primary text-xl font-bold animate-pulse-soft"
-          >
-            {isLoading ? 'Drawing... 🎲' : 'Draw Winner! 🎯'}
-          </button>
-        )}
-
-        {winner && (
-          <WinnerDisplay
-            winner={winner}
-            animal={winnerAnimal || ''}
-            prize={winnerPrize || ''}
-            photo={winnerPhoto || undefined}
-            prizePhoto={winnerPrizePhoto || undefined}
-            onClose={resetWinner}
+    <SafariBackground>
+      <div className="min-h-screen">
+        <div className="max-w-7xl mx-auto px-4 py-8">
+          <Sidebar
+            isLoadingData= {isLoading} 
+            participantCounter={participants.length}    
+            onPickAWinner={handlePickWinner}
+            onManagePrizes={() => setIsPrizeManagementOpen(true)}
+            onOpenSettings={() => setIsSettingsOpen(true)}
           />
-        )}
 
-        <PrizePrompt
-          isOpen={isPrizePromptOpen}
-          onClose={() => setIsPrizePromptOpen(false)}
-          onSubmit={(prizeId) => {
-            setIsPrizePromptOpen(false);
-            performDraw(false, prizeId);
-          }}
-          onAddPrize={handleAddPrize}
-          onUpdatePrize={handleUpdatePrize}
-          onDeletePrize={handleDeletePrize}
-          prizes={prizes}
-        />
+          <header className="text-center mb-12">
+            <h1 className="safari-title mb-4">
+              Lucky Safari Raffle! 🦁
+            </h1>
+            <p className="jungle-accent">
+              Join the adventure and try your luck! 🌿
+            </p>
+          </header>
 
-        <PrizeManagement
-          isOpen={isPrizeManagementOpen}
-          onClose={() => setIsPrizeManagementOpen(false)}
-          prizes={prizes}
-          onAddPrize={handleAddPrize}
-          onUpdatePrize={handleUpdatePrize}
-          onDeletePrize={handleDeletePrize}
-        />
+          <Settings
+            settings={settings}
+            onUpdateSettings={updateSettings}
+            onClearPrizes={clearPrizes}
+            onClearAllData={clearAllData}
+            isOpen={isSettingsOpen}
+            onClose={() => setIsSettingsOpen(false)}
+          />
 
-        {isLoading && <LoadingSpinner />}
-
-        {showDrumroll && (
-          <DrumrollAnimation onComplete={handleDrumrollComplete} />
-        )}
-
-        {error && (
-          <div className="fixed bottom-4 right-4 bg-jungle-coral text-white px-6 py-3 rounded-lg shadow-jungle">
-            {error}
+          <div className="flex justify-center gap-4 items-center mb-8">
+            <button
+              onClick={() => setShowAddParticipant(true)}
+              className="btn-primary text-xl font-bold"
+            >
+              Add Participant 🎪
+            </button>
           </div>
-        )}
+
+          <EditModal
+            isOpen={showAddParticipant}
+            onClose={() => setShowAddParticipant(false)}
+            onSave={handleAddParticipant}
+          />
+
+          <EditModal
+            isOpen={!!editingParticipant}
+            onClose={() => setEditingParticipant(null)}
+            onSave={handleEditParticipant}
+            participant={editingParticipant || undefined}
+            title="Edit Participant"
+          />
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+            {participants.map(participant => (
+              <div key={participant.id} className="flex flex-col h-full">
+                <ParticipantCard
+                  allowMultipleWins={settings.allow_multiple_wins}
+                  participant={participant}
+                  onEdit={setEditingParticipant}
+                  onDelete={handleDeleteParticipant}
+                />
+              </div>
+            ))}
+          </div>
+          {winner && (
+            <WinnerDisplay
+              winner={winner}
+              animal={winnerAnimal || ''}
+              prize={winnerPrize || ''}
+              photo={winnerPhoto || undefined}
+              prizePhoto={winnerPrizePhoto || undefined}
+              onClose={resetWinner}
+            />
+          )}
+
+          <PrizePrompt
+            isOpen={isPrizePromptOpen}
+            onClose={() => setIsPrizePromptOpen(false)}
+            onSubmit={(prizeId) => {
+              setIsPrizePromptOpen(false);
+              performDraw(false, prizeId);
+            }}
+            onAddPrize={handleAddPrize}
+            onUpdatePrize={handleUpdatePrize}
+            onDeletePrize={handleDeletePrize}
+            prizes={prizes}
+          />
+
+          <PrizeManagement
+            isOpen={isPrizeManagementOpen}
+            onClose={() => setIsPrizeManagementOpen(false)}
+            prizes={prizes}
+            onAddPrize={handleAddPrize}
+            onUpdatePrize={handleUpdatePrize}
+            onDeletePrize={handleDeletePrize}
+          />
+
+          {isLoading && <LoadingSpinner />}
+
+          {showDrumroll && (
+            <DrumrollAnimation onComplete={handleDrumrollComplete} />
+          )}
+
+          {error && (
+            <div className="fixed bottom-4 right-4 bg-jungle-coral text-white px-6 py-3 rounded-lg shadow-jungle">
+              {error}
+            </div>
+          )}
+        </div>
       </div>
-    </div>
+    </SafariBackground>
   );
 }
 

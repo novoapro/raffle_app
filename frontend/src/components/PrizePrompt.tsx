@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import PrizeManagement from './PrizeManagement';
 import type { Prize } from '../types';
+import DialogHeader from './DialogHeader';
 
 interface PrizePromptProps {
   isOpen: boolean;
@@ -20,42 +21,28 @@ const PrizePrompt = ({ isOpen, onClose, onSubmit, onAddPrize, onUpdatePrize, onD
   const availablePrizes = prizes.filter(prize => prize.remaining > 0);
 
   return (
-    <div className="fixed inset-0 bg-jungle-brown/50 backdrop-blur-sm z-50 flex items-center justify-center">
-      <div className="card max-w-2xl w-full m-4 relative">
-        {/* Decorative elements */}
-        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-jungle-green via-jungle-gold to-jungle-coral"></div>
-        <div className="absolute top-2 left-2 text-2xl animate-sway">🌿</div>
-        <div className="absolute top-2 right-2 text-2xl animate-sway" style={{ animationDelay: '0.5s' }}>🌿</div>
+    <div className={`fixed inset-0 flex items-center justify-center
+      ${!showPrizeManagement ? 'bg-jungle-brown/50 backdrop-blur-sm z-50' : 'bg-transparent z-40'}`}>
+      <div className="border-2 border-jungle-olive/10 bg-white rounded-2xl max-w-5xl relative flex flex-col overflow-hidden">
+        <div>
+        <DialogHeader
+          title="Select a Prize"
+          onClose={onClose}
+        />  
 
-        <div className="p-6">
-          <div className="flex items-center justify-between mb-8">
-            <h2 className="safari-title">Select Prize 🎁</h2>
-            <div className="flex items-center gap-4">
+          {availablePrizes.length === 0 ? (
+            <div className="text-center py-12">
+              <p className="font-headline text-jungle-brown text-xl mb-2">No prizes available!</p>
               <button
                 onClick={() => setShowPrizeManagement(true)}
-                className="btn-secondary flex items-center gap-2"
+                className="btn-secondary mt-5"
               >
                 <span>🎯</span>
                 Manage Prizes
               </button>
-              <button
-                onClick={onClose}
-                className="w-10 h-10 flex items-center justify-center rounded-full 
-                         hover:bg-jungle-brown/10 text-jungle-brown transition-colors duration-300"
-              >
-                ✕
-              </button>
-            </div>
-          </div>
-
-          {availablePrizes.length === 0 ? (
-            <div className="text-center py-12">
-              <div className="text-6xl mb-4 animate-bounce">🎁</div>
-              <p className="font-headline text-jungle-brown text-xl mb-2">No prizes available!</p>
-              <p className="jungle-accent">Click "Manage Prizes" to add some treasures.</p>
             </div>
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-h-[60vh] overflow-y-auto pr-2">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-10 overflow-y-auto p-12">
               {availablePrizes.map((prize) => (
                 <button
                   key={prize.id}
