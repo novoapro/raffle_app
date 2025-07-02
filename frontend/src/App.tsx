@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import type { Participant, Prize, RaffleSettings, ApiResponse } from './types';
+import type { Participant, Prize, RaffleSettings, ApiResponse, AddParticipantPayload } from './types';
 import SafariBackground from './components/SafariBackground';
 import EditModal from './components/EditModal'
 import ParticipantCard from './components/ParticipantCard'
@@ -140,7 +140,7 @@ function App() {
     }
   };
 
-  const handleAddParticipant = async (participant: Partial<Participant>) => {
+  const handleAddParticipant = async (participant: AddParticipantPayload) => {
     try {
       setIsLoading(true);
       const formData = new FormData();
@@ -159,7 +159,9 @@ function App() {
       const data: ApiResponse = await response.json();
 
       if (data.status === 'success') {
-        setShowAddParticipant(false);
+        if (!participant.addAnother) {
+          setShowAddParticipant(false);
+        }
         await fetchParticipants();
       }
     } catch (error) {
@@ -391,7 +393,7 @@ function App() {
             style={{ background: "transparent" }}
           >
             <img
-              src="./public/assets/banner.png"
+              src="/assets/banner.png"
               alt="Raffle App Logo"
               className="bg-transparent mx-auto"
               style={{ maxWidth: "100%", height: "auto" }}
@@ -400,7 +402,7 @@ function App() {
           <div className="" /> {/* Spacer to prevent content from being hidden behind the fixed header */}
             <div className="flex flex-col items-center justify-center">
             <img
-              src="./public/assets/title.png"
+              src="/assets/title.png"
               alt="Raffle App Title"
               className="mx-auto"
               style={{ maxWidth: "60%", width: "100%", height: "auto", zIndex: 20 }}
@@ -409,9 +411,10 @@ function App() {
             <div className="" /> {/* Spacer to prevent content from being hidden behind the fixed header */}
             <div className="flex flex-col items-center justify-center">
             <img
-              src="./public/assets/animals.png"
+              src="/assets/animals.png"
               alt="Raffle App Title"
               className="mx-auto"
+              style={{ maxWidth: "40%", width: "100%", height: "auto", zIndex: 20 }}
             />
             </div>
           <Settings
@@ -498,7 +501,7 @@ function App() {
           )}
 
           {error && (
-            <div className="fixed bottom-4 right-4 bg-jungle-coral text-white px-6 py-3 rounded-lg shadow-jungle">
+            <div className="fixed bottom-4 right-4 bg-jungle-coral text-white px-6 py-3 rounded-lg shadow-jungle z-50">
               {error}
             </div>
           )}

@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import type { Participant } from '../types.ts';
-import WebcamCapture from './WebcamCapture';
+import React, { useState, useEffect, useRef } from 'react';
+import type { Participant, AddParticipantPayload } from '../types.ts';
+import WebcamCapture, { type WebcamCaptureHandle } from './WebcamCapture';
 import DialogHeader from './DialogHeader.tsx';
 
 interface EditModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onSave: (participant: Partial<Participant>) => void;
+  onSave: (participant: AddParticipantPayload) => void;
   participant?: Participant;
   title?: string;
 }
@@ -14,55 +14,67 @@ interface EditModalProps {
 const EditModal: React.FC<EditModalProps> = ({ isOpen, onClose, onSave, participant, title = 'Add Participant' }) => {
   const [name, setName] = useState(participant?.name || '');
   const [tickets, setTickets] = useState(participant?.tickets?.toString() || '1');
-  const [photo, setPhoto] = useState<string | null>(participant?.photo_path || null);
-  const [showWebcam, setShowWebcam] = useState(false);
+  const [saving, setSaving] = useState(false);
+  const [addAnother, setAddAnother] = useState(false);
+  const [justAdded, setJustAdded] = useState(false);
+  const [showWebcam, setShowWebcam] = useState(!participant);
+  const [photoPreview, setPhotoPreview] = useState<string | null>(participant?.photo_path || null);
+  const webcamRef = useRef<WebcamCaptureHandle>(null);
 
-  // Update state when participant prop changes
   useEffect(() => {
+    if (justAdded) {
+      setJustAdded(false);
+      return;
+    }
+    setShowWebcam(!participant);
+    setPhotoPreview(participant?.photo_path || null);
     if (participant) {
       setName(participant.name);
       setTickets(participant.tickets.toString());
-      setPhoto(participant.photo_path || null);
-    } else {
-      // Reset form when adding new participant
+    } else if (!addAnother) {
       setName('');
       setTickets('1');
-      setPhoto(null);
     }
   }, [participant]);
 
   if (!isOpen) return null;
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setSaving(true);
+    let photoData = photoPreview;
+    if (showWebcam && webcamRef.current && webcamRef.current.getScreenshot) {
+      photoData = webcamRef.current.getScreenshot() || '';
+      setPhotoPreview(photoData);
+    }
     onSave({
       ...(participant?.id ? { id: participant.id } : {}),
       name,
       tickets: parseInt(tickets),
-      ...(photo ? { photo_path: photo } : {})
+      ...(photoData ? { photo_path: photoData } : {}),
+      addAnother
     });
-    setName('');
-    setTickets('1');
-    setPhoto(null);
-  };
-
-  const handlePhotoCapture = (photoData: string) => {
-    setPhoto(photoData);
-    setShowWebcam(false);
+    setSaving(false);
+    if (addAnother) {
+      setName('');
+      setTickets('1');
+      setPhotoPreview(null);
+      setShowWebcam(true);
+      setJustAdded(true);
+    } else {
+      onClose();
+    }
+    setAddAnother(false);
   };
 
   return (
-    <div className={`fixed inset-0 flex items-center justify-center z-40
-      ${showWebcam ? 'bg-transparent' : 'bg-jungle-brown/50 backdrop-blur-sm'}
-    `}>
-      {/* Modal container */}
+    <div className={`fixed inset-0 flex items-center justify-center z-40 bg-jungle-brown/50 backdrop-blur-sm`}>
       <div className="border-2 border-jungle-olive/10 bg-white rounded-2xl relative flex flex-col overflow-hidden">
-
         <DialogHeader
           title={participant ? "Edit Participant" : "Add Participant"}
         />
         <div className="p-12">
-          <form onSubmit={handleSubmit} className="space-y-6">
+          <form id="edit-modal-form" onSubmit={handleSubmit} className="space-y-6">
             <div>
               <label className="block font-headline text-jungle-brown mb-2" htmlFor="name">
                 Name
@@ -76,7 +88,6 @@ const EditModal: React.FC<EditModalProps> = ({ isOpen, onClose, onSave, particip
                 required
               />
             </div>
-
             <div>
               <label className="block font-headline text-jungle-brown mb-2" htmlFor="tickets">
                 Number of Tickets
@@ -91,64 +102,54 @@ const EditModal: React.FC<EditModalProps> = ({ isOpen, onClose, onSave, particip
                 required
               />
             </div>
-
-            <div>
-              <label className="block font-headline text-jungle-brown mb-2">
-                Photo
-              </label>
-              {photo ? (
-                <div className="relative">
-                  <img
-                    src={photo}
-                    alt="Captured"
-                    className="w-full h-48 object-cover rounded-xl shadow-jungle mb-2"
-                  />
+            {/* Photo field logic */}
+            <div className="mb-4">
+              {participant && !showWebcam ? (
+                <div className="flex flex-col items-center gap-2">
+                  {photoPreview ? (
+                    <img src={photoPreview} alt="Current" className="w-40 h-40 object-cover rounded-xl shadow-jungle mb-2" />
+                  ) : (
+                    <div className="w-40 h-40 bg-jungle-brown/10 flex items-center justify-center rounded-xl mb-2">No Photo</div>
+                  )}
                   <button
                     type="button"
-                    onClick={() => setPhoto(null)}
-                    className="absolute top-2 right-2 bg-jungle-coral text-white rounded-full p-2 
-                           hover:bg-jungle-gold transition-colors duration-300 shadow-jungle"
+                    className="btn-secondary"
+                    onClick={() => setShowWebcam(true)}
                   >
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
-                      <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
-                    </svg>
+                    Update Photo
                   </button>
                 </div>
               ) : (
-                <button
-                  type="button"
-                  onClick={() => setShowWebcam(true)}
-                  className="btn-secondary w-full flex items-center justify-center gap-2"
-                >
-                  📸 Take Photo
-                </button>
+                <WebcamCapture ref={webcamRef} />
               )}
             </div>
-
             <div className="flex justify-end gap-4 pt-4">
               <button
                 type="button"
                 onClick={onClose}
                 className="btn-secondary bg-jungle-brown/10 text-jungle-brown hover:bg-jungle-brown/20"
+                disabled={saving}
               >
                 Cancel
               </button>
               <button
+                type="button"
+                className="btn-secondary"
+                disabled={saving}
+                onClick={() => { setAddAnother(true); setTimeout(() => { document.getElementById('edit-modal-form')?.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true })); }, 0); }}
+              >
+                Save & Add Another
+              </button>
+              <button
                 type="submit"
                 className="btn-primary"
+                disabled={saving}
               >
-                Save
+                {saving ? 'Saving...' : 'Save'}
               </button>
             </div>
           </form>
         </div>
-
-        {showWebcam && (
-          <WebcamCapture
-            onCapture={handlePhotoCapture}
-            onCancel={() => setShowWebcam(false)}
-          />
-        )}
       </div>
     </div>
   );

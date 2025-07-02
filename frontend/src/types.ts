@@ -34,3 +34,5 @@ export type RaffleSettings = {
   allow_multiple_wins: boolean;
   auto_prize_selection: boolean;
 }
+
+export type AddParticipantPayload = Partial<Participant> & { addAnother?: boolean };
