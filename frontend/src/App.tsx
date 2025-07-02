@@ -10,6 +10,7 @@ import PrizePrompt from './components/PrizePrompt'
 import PrizeManagement from './components/PrizeManagement'
 import DrumrollAnimation from './components/DrumrollAnimation'
 import Sidebar from './components/Sidebar'
+import Toast from './components/Toast'
 
 const API = {
   GET_PARTICIPANTS: '/api/get_participants',
@@ -34,7 +35,6 @@ function App() {
   const [winnerPhoto, setWinnerPhoto] = useState<string | null>(null);
   const [winnerPrizePhoto, setWinnerPrizePhoto] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
   const [settings, setSettings] = useState<RaffleSettings>({
     allow_multiple_wins: false,
     auto_prize_selection: true
@@ -51,6 +51,15 @@ function App() {
     photo: string | null;
     prizePhoto: string | null;
   } | null>(null);
+  const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
+
+  // Auto-dismiss toast after 5 seconds
+  useEffect(() => {
+    if (toast) {
+      const timer = setTimeout(() => setToast(null), 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [toast]);
 
   const fetchParticipants = async () => {
     try {
@@ -149,16 +158,14 @@ function App() {
       if (participant.photo_path) {
         formData.append('photo', participant.photo_path);
       }
-
       const response = await fetch(API.ADD_PARTICIPANT, {
         method: 'POST',
         body: formData,
       });
-
       if (!response.ok) throw new Error('Failed to add participant');
       const data: ApiResponse = await response.json();
-
       if (data.status === 'success') {
+        setToast({ message: 'Participant created successfully!', type: 'success' });
         if (!participant.addAnother) {
           setShowAddParticipant(false);
         }
@@ -353,8 +360,8 @@ function App() {
   }, []);
 
   const showError = (message: string) => {
-    setError(message);
-    setTimeout(() => setError(null), 5000);
+    setToast({ message: message, type: 'error' });
+    setTimeout(() => setToast(null), 5000);
   };
 
   const resetWinner = () => {
@@ -499,11 +506,8 @@ function App() {
           {showDrumroll && (
             <DrumrollAnimation onComplete={handleDrumrollComplete} />
           )}
-
-          {error && (
-            <div className="fixed bottom-4 right-4 bg-jungle-coral text-white px-6 py-3 rounded-lg shadow-jungle z-50">
-              {error}
-            </div>
+          {toast && (
+            <Toast message={toast.message} type={toast.type} />
           )}
         </div>
       </div>
