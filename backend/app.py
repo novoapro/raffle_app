@@ -137,6 +137,7 @@ def edit_participant():
     name = request.form.get('name')
     tickets = request.form.get('tickets')
     photo = request.form.get('photo')  # Base64 image from webcam
+    existingParticipant = db.get_participant(participant_id)
     
     if not participant_id or not name:
         return jsonify({
@@ -160,11 +161,20 @@ def edit_participant():
             filename = process_base64_image(photo, PARTICIPANT_PHOTOS)
             if filename:
                 update_data['photo_path'] = f"/api/uploads/participants/{filename}"
-        
+        else:
+            # If no photo is provided, ensure photo_path is not set
+            update_data['photo_path'] = ""
+        if existingParticipant and existingParticipant.get('photo_path'):
+            # If the participant had a photo, we should remove it if it's being updated
+            filename = os.path.basename(existingParticipant['photo_path'])
+            photo_path = os.path.join(PARTICIPANT_PHOTOS, filename)
+            if os.path.exists(photo_path):
+                os.remove(photo_path)
+            
         participant = db.update_participant(participant_id, **update_data)
         return jsonify({
             'status': 'success',
-            'message': f'Updated participant successfully',
+            'message': 'Updated participant successfully',
             'participant': participant
         })
     except ValueError as e:

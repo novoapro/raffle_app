@@ -67,7 +67,7 @@ const PrizeManagement: React.FC<PrizeManagementProps> = ({
 
   return (
     <div className="fixed inset-0 bg-jungle-brown/50 backdrop-blur-sm flex items-center justify-center z-40">
-      <div className="bg-white rounded-2xl w-full max-w-5xl max-h-[90vh] relative flex flex-col overflow-hidden">
+      <div className="border-2 border-jungle-olive/10 bg-white rounded-2xl w-full max-w-5xl max-h-[90vh] relative flex flex-col overflow-hidden">
        <DialogHeader
           title={editingPrize ? 'Edit Prize' : 'Add New Prize'}
           message={editingPrize ? 'Update the prize details below.' : 'Fill in the details for the new prize.'}

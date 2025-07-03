@@ -407,23 +407,36 @@ function App() {
             />
           </header>
           <div className="" /> {/* Spacer to prevent content from being hidden behind the fixed header */}
-            <div className="flex flex-col items-center justify-center">
+          <div className="flex flex-col items-center justify-center">
             <img
               src="/assets/title.png"
               alt="Raffle App Title"
               className="mx-auto"
               style={{ maxWidth: "60%", width: "100%", height: "auto", zIndex: 20 }}
             />
+          </div>
+          <div className="" /> {/* Spacer to prevent content from being hidden behind the fixed header */}
+          <div className="relative flex items-center justify-center">
+            <div
+              className="absolute"
+              style={{ top: 40, width: '40%' }}>
+              <img
+                src="/assets/path.png"
+                alt="Raffle App Path"
+                className="z-0 mx-auto"
+              />
             </div>
-            <div className="" /> {/* Spacer to prevent content from being hidden behind the fixed header */}
-            <div className="flex flex-col items-center justify-center">
-            <img
-              src="/assets/animals.png"
-              alt="Raffle App Title"
-              className="mx-auto"
-              style={{ maxWidth: "40%", width: "100%", height: "auto", zIndex: 20 }}
-            />
+            <div
+              className=""
+              style={{ top: '120px', width: '40%' }}>
+              <img
+                src="/assets/animals.png"
+                alt="Raffle App Animals"
+                className="mx-auto animate-shake w-full"
+                style={{ zIndex: 20 }}
+              />
             </div>
+          </div>
           <Settings
             settings={settings}
             onUpdateSettings={updateSettings}
@@ -437,6 +450,7 @@ function App() {
             <button
               onClick={() => setShowAddParticipant(true)}
               className="btn-primary text-xl font-bold"
+              style={{ zIndex: 20 }}
             >
               Add Participant 🎪
             </button>

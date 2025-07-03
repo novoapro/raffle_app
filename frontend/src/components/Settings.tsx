@@ -30,7 +30,7 @@ const Settings: React.FC<SettingsProps> = ({
         ${showClearAllConfirm || showClearPrizesConfirm ? 'bg-transparent' : 'bg-jungle-brown/50 backdrop-blur-sm'}
     `}>
       {/* Main settings dialog */}
-      <div className="bg-white rounded-2xl max-w-5xl relative flex flex-col overflow-hidden">
+      <div className="border-2 border-jungle-olive/10 bg-white rounded-2xl max-w-5xl relative flex flex-col overflow-hidden">
         <div>
           <DialogHeader
             title="Settings"

@@ -6,46 +6,40 @@
   html {
     font-family: 'Poppins', system-ui, sans-serif;
   }
-  
+
   body {
     @apply text-jungle-brown;
   }
 
-  h1, h2, h3, h4, h5, h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     @apply font-headline text-jungle-brown;
   }
 }
 
 @layer components {
   .btn-primary {
-    @apply bg-jungle-green text-white px-8 py-3 rounded-xl 
-           hover:bg-jungle-leaf transition-all duration-300 
-           disabled:opacity-50 font-semibold shadow-jungle 
-           hover:shadow-lg uppercase tracking-wider;
+    @apply bg-jungle-green text-white px-8 py-3 rounded-xl hover:bg-jungle-leaf transition-all duration-300 disabled:opacity-50 font-semibold shadow-jungle hover:shadow-lg uppercase tracking-wider;
   }
-  
+
   .btn-secondary {
-    @apply bg-jungle-coral text-white px-6 py-2 rounded-xl 
-           hover:bg-jungle-gold transition-all duration-300 
-           disabled:opacity-50 font-semibold shadow-jungle 
-           hover:shadow-lg;
+    @apply bg-jungle-coral text-white px-6 py-2 rounded-xl hover:bg-jungle-gold transition-all duration-300 disabled:opacity-50 font-semibold shadow-jungle hover:shadow-lg;
   }
-  
+
   .card {
-    @apply bg-white/90 backdrop-blur-sm rounded-2xl p-6 md:p-8 
-           shadow-jungle border-2 border-jungle-olive/10
-           hover:border-jungle-olive/20 transition-all duration-300;
+    @apply bg-white/90 backdrop-blur-sm rounded-2xl p-6 md:p-8 shadow-jungle border-2 border-jungle-olive/10 hover:border-jungle-olive/20 transition-all duration-300;
   }
-  
+
   .input {
-    @apply rounded-xl border-jungle-leaf border-2 px-4 py-3 
-           focus:border-jungle-green focus:ring focus:ring-jungle-green/20 
-           transition-all duration-300 bg-white/80;
+    @apply rounded-xl border-jungle-leaf border-2 px-4 py-3 focus:border-jungle-green focus:ring focus:ring-jungle-green/20 transition-all duration-300 bg-white/80;
   }
 
   .safari-title {
-    @apply font-headline text-4xl md:text-5xl lg:text-6xl 
-           text-jungle-brown tracking-wider uppercase;
+    @apply font-headline text-4xl md:text-5xl lg:text-6xl text-jungle-brown tracking-wider uppercase;
   }
 
   .jungle-accent {
@@ -73,36 +67,152 @@
 }
 
 @keyframes toast-pop-success {
-  0% { opacity: 0; transform: translateY(40px) scale(0.8) rotate(-2deg); filter: blur(2px); }
-  40% { opacity: 1; transform: translateY(-8px) scale(1.05) rotate(2deg); filter: blur(0); }
-  60% { opacity: 1; transform: translateY(0) scale(1.02) rotate(-1deg); }
-  80% { opacity: 1; transform: translateY(0) scale(1.01) rotate(1deg); }
-  100% { opacity: 1; transform: translateY(0) scale(1) rotate(0deg); }
+  0% {
+    opacity: 0;
+    transform: translateY(40px) scale(0.8) rotate(-2deg);
+    filter: blur(2px);
+  }
+
+  40% {
+    opacity: 1;
+    transform: translateY(-8px) scale(1.05) rotate(2deg);
+    filter: blur(0);
+  }
+
+  60% {
+    opacity: 1;
+    transform: translateY(0) scale(1.02) rotate(-1deg);
+  }
+
+  80% {
+    opacity: 1;
+    transform: translateY(0) scale(1.01) rotate(1deg);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1) rotate(0deg);
+  }
 }
+
 @keyframes toast-pop-error {
-  0% { opacity: 0; transform: translateY(40px) scale(0.8) rotate(-8deg); filter: blur(2px); }
-  30% { opacity: 1; transform: translateY(-8px) scale(1.08) rotate(8deg); filter: blur(0); }
-  60% { opacity: 1; transform: translateY(0) scale(1.03) rotate(-4deg); }
-  80% { opacity: 1; transform: translateY(0) scale(1.01) rotate(2deg); }
-  100% { opacity: 1; transform: translateY(0) scale(1) rotate(0deg); }
+  0% {
+    opacity: 0;
+    transform: translateY(40px) scale(0.8) rotate(-8deg);
+    filter: blur(2px);
+  }
+
+  30% {
+    opacity: 1;
+    transform: translateY(-8px) scale(1.08) rotate(8deg);
+    filter: blur(0);
+  }
+
+  60% {
+    opacity: 1;
+    transform: translateY(0) scale(1.03) rotate(-4deg);
+  }
+
+  80% {
+    opacity: 1;
+    transform: translateY(0) scale(1.01) rotate(2deg);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1) rotate(0deg);
+  }
 }
+
 @keyframes toast-pop-out-success {
-  0% { opacity: 1; transform: translateY(0) scale(1) rotate(0deg); }
-  100% { opacity: 0; transform: translateY(40px) scale(0.8) rotate(2deg); filter: blur(2px); }
+  0% {
+    opacity: 1;
+    transform: translateY(0) scale(1) rotate(0deg);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateY(40px) scale(0.8) rotate(2deg);
+    filter: blur(2px);
+  }
 }
+
 @keyframes toast-pop-out-error {
-  0% { opacity: 1; transform: translateY(0) scale(1) rotate(0deg); }
-  100% { opacity: 0; transform: translateY(40px) scale(0.8) rotate(-8deg); filter: blur(2px); }
+  0% {
+    opacity: 1;
+    transform: translateY(0) scale(1) rotate(0deg);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateY(40px) scale(0.8) rotate(-8deg);
+    filter: blur(2px);
+  }
 }
+
+@keyframes shake {
+  0% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+
+  10% {
+    transform: translate(-0.2px, 0.2px) rotate(-0.2deg);
+  }
+
+  20% {
+    transform: translate(-0.2px, -0.2px) rotate(0.1deg);
+  }
+
+  30% {
+    transform: translate(0.2px, 0.4px) rotate(0.1deg);
+  }
+
+  40% {
+    transform: translate(0.2px, -0.2px) rotate(0.2deg);
+  }
+
+  50% {
+    transform: translate(-0.2px, 0.4px) rotate(-0.1deg);
+  }
+
+  60% {
+    transform: translate(-0.2px, -0.2px) rotate(0deg);
+  }
+
+  70% {
+    transform: translate(0.2px, 0.2px) rotate(0.2deg);
+  }
+
+  80% {
+    transform: translate(0.2px, -0.4px) rotate(-0.2deg);
+  }
+
+  90% {
+    transform: translate(-0.2px, 0.2px) rotate(0deg);
+  }
+
+  100% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+}
+
 .animate-toast-pop-success {
-  animation: toast-pop-success 0.7s cubic-bezier(0.4,0,0.2,1);
+  animation: toast-pop-success 0.7s cubic-bezier(0.4, 0, 0.2, 1);
 }
+
 .animate-toast-pop-error {
-  animation: toast-pop-error 0.7s cubic-bezier(0.4,0,0.2,1);
+  animation: toast-pop-error 0.7s cubic-bezier(0.4, 0, 0.2, 1);
 }
+
 .animate-toast-pop-out-success {
-  animation: toast-pop-out-success 0.7s cubic-bezier(0.4,0,0.2,1);
+  animation: toast-pop-out-success 0.7s cubic-bezier(0.4, 0, 0.2, 1);
 }
+
 .animate-toast-pop-out-error {
-  animation: toast-pop-out-error 0.7s cubic-bezier(0.4,0,0.2,1);
+  animation: toast-pop-out-error 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.animate-shake {
+  animation: shake 0.7s infinite;
+  display: inline-block;
 }

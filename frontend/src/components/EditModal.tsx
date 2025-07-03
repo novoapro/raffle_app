@@ -11,7 +11,7 @@ interface EditModalProps {
   title?: string;
 }
 
-const EditModal: React.FC<EditModalProps> = ({ isOpen, onClose, onSave, participant, title = 'Add Participant' }) => {
+const EditModal: React.FC<EditModalProps> = ({ isOpen, onClose, onSave, participant }) => {
   const [name, setName] = useState(participant?.name || '');
   const [tickets, setTickets] = useState(participant?.tickets?.toString() || '1');
   const [saving, setSaving] = useState(false);
@@ -19,6 +19,7 @@ const EditModal: React.FC<EditModalProps> = ({ isOpen, onClose, onSave, particip
   const [justAdded, setJustAdded] = useState(false);
   const [showWebcam, setShowWebcam] = useState(!participant);
   const [photoPreview, setPhotoPreview] = useState<string | null>(participant?.photo_path || null);
+  const [cameraOptOut, setCameraOptOut] = useState(false);
   const webcamRef = useRef<WebcamCaptureHandle>(null);
 
   useEffect(() => {
@@ -28,6 +29,7 @@ const EditModal: React.FC<EditModalProps> = ({ isOpen, onClose, onSave, particip
     }
     setShowWebcam(!participant);
     setPhotoPreview(participant?.photo_path || null);
+    setCameraOptOut(false);
     if (participant) {
       setName(participant.name);
       setTickets(participant.tickets.toString());
@@ -42,7 +44,8 @@ const EditModal: React.FC<EditModalProps> = ({ isOpen, onClose, onSave, particip
   const handleClose = () => {
     setPhotoPreview(null);
     setName('');
-    setTickets('1'); 
+    setTickets('1');
+    setCameraOptOut(false);
     onClose();
     setJustAdded(false);
     setAddAnother(false);
@@ -53,7 +56,7 @@ const EditModal: React.FC<EditModalProps> = ({ isOpen, onClose, onSave, particip
     e.preventDefault();
     setSaving(true);
     let photoData = photoPreview;
-    if (showWebcam && webcamRef.current && webcamRef.current.getScreenshot) {
+    if (!cameraOptOut && showWebcam && webcamRef.current && webcamRef.current.getScreenshot) {
       photoData = webcamRef.current.getScreenshot() || '';
       setPhotoPreview(photoData);
     }
@@ -61,10 +64,10 @@ const EditModal: React.FC<EditModalProps> = ({ isOpen, onClose, onSave, particip
       ...(participant?.id ? { id: participant.id } : {}),
       name,
       tickets: parseInt(tickets),
-      ...(photoData ? { photo_path: photoData } : {}),
+      ...(photoData && !cameraOptOut ? { photo_path: photoData } : { photo_path: "" }),
       addAnother
     });
-    if(!addAnother) {
+    if (!addAnother) {
       onClose();
     }
     setSaving(false);
@@ -72,6 +75,7 @@ const EditModal: React.FC<EditModalProps> = ({ isOpen, onClose, onSave, particip
     setName('');
     setTickets('1');
     setPhotoPreview(null);
+    setCameraOptOut(false);
   };
 
   return (
@@ -93,6 +97,8 @@ const EditModal: React.FC<EditModalProps> = ({ isOpen, onClose, onSave, particip
                 onChange={(e) => setName(e.target.value)}
                 className="input w-full"
                 required
+                tabIndex={0} // Added for accessibility
+                autoFocus={!participant} // Autofocus only if adding a new participant
               />
             </div>
             <div>
@@ -107,6 +113,7 @@ const EditModal: React.FC<EditModalProps> = ({ isOpen, onClose, onSave, particip
                 min="1"
                 className="input w-full"
                 required
+                tabIndex={0}
               />
             </div>
             {/* Photo field logic */}
@@ -127,7 +134,22 @@ const EditModal: React.FC<EditModalProps> = ({ isOpen, onClose, onSave, particip
                   </button>
                 </div>
               ) : (
-                <WebcamCapture ref={webcamRef} />
+                <>
+                  <WebcamCapture ref={webcamRef} />
+                    <div className="flex items-center mt-2">
+                    <input
+                      id="cameraOptOut"
+                      type="checkbox"
+                      checked={cameraOptOut}
+                      onChange={e => setCameraOptOut(e.target.checked)}
+                      className="mr-2"
+                      tabIndex={0}
+                    />
+                    <label htmlFor="cameraOptOut" className="text-jungle-brown text-sm select-none">
+                      Opt out of camera (create participant without photo)
+                    </label>
+                  </div>
+                </>
               )}
             </div>
             <div className="flex justify-end gap-4 pt-4">
@@ -137,26 +159,30 @@ const EditModal: React.FC<EditModalProps> = ({ isOpen, onClose, onSave, particip
                 className="btn-secondary bg-jungle-brown/10 text-jungle-brown hover:bg-jungle-brown/20"
                 disabled={saving}
               >
-                Cancel
+                Close
               </button>
-              {!participant && (
+              {!participant ? (
                 <button
                   type="button"
                   className="btn-secondary"
                   disabled={saving}
+                  tabIndex={0}
                   onClick={() => { setAddAnother(true); setTimeout(() => { document.getElementById('edit-modal-form')?.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true })); }, 0); }}
                 >
                   Save & Add Another
                 </button>
+              ) : (
+                <button
+                  type="button"
+                  className="btn-primary"
+                  disabled={saving}
+                  tabIndex={0}
+                  onClick={() => { setAddAnother(false); setTimeout(() => { document.getElementById('edit-modal-form')?.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true })); }, 0); }}
+                >
+                  {saving ? 'Saving...' : 'Save'}
+                </button>
               )}
-              <button
-                type="button"
-                className="btn-primary"
-                disabled={saving}
-                onClick={() => { setAddAnother(false); setTimeout(() => { document.getElementById('edit-modal-form')?.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true })); }, 0); }}
-              >
-                {saving ? 'Saving...' : 'Save'}
-              </button>
+
             </div>
           </form>
         </div>
